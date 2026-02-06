@@ -1,4 +1,4 @@
-### The Why
+
 
 ## Why this project
 I’m building this project to get hands-on with real frontend problems like routing, data fetching, media handling, browser extensions, and Progressive Web App support using React.
