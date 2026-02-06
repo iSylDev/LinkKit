@@ -34,6 +34,17 @@ The value comes from solving problems I can’t avoid in real products such as s
 - [ ] User should be able to install the app on their mobile and access it offline
 - [ ] Automatically fetch website metadata (favicon, title, description) when adding a bookmark URL
 
+
+## Tech Stack
+- Frontend: React, React Router
+- Styling: Tailwind CSS
+- Backend & Auth: Supabase (Database + Authentication)
+- Media Storage: Cloudinary
+
+## Approach
+- I’m minimizing state and context usage wherever possible, delegating fetching, loading, and submission states to React Router. The goal is a cleaner architecture that leverages URL-driven state and built-in data handling rather than scattered local state.
+
+
 ### Data Models
 
 ## - _profile_ (Table)
