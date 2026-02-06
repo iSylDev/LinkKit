@@ -1,1 +1,48 @@
+@import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
 @import "tailwindcss";
+
+* {
+  font-family: "Manrope";
+}
+
+.animate {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.pointer {
+  @apply cursor-pointer; /* Tailwind 4 uses 'cursor-pointer' directly */
+}
+
+@theme {
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+  /* Fixed: Increased opacity from 0.0 to 0.08 for better depth */
+  --shadow-md: 0 4px 6px 1px rgb(0 0 0 / 0.08), 0 2px 2px -2px rgb(0 0 0 / 0.1);
+
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Colors */
+  --color-teal: #dde9e7;
+  --color-dark-surface: #1a1a1a;
+  --color-dark-green: #001414;
+  --color-light-green: #001F1F;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-in {
+  animation: slideIn 0.2s ease-in-out forwards;
+  transform-origin: top right; /* Makes it grow from the button corner */
+}
