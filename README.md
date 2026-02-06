@@ -98,6 +98,7 @@ The value comes from solving problems I can’t avoid in real products such as s
 - Avatar
 - Button
 - Input
+- StatsShowcase
 - Badge
 - Options
 - DropDown

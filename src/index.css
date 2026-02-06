@@ -12,9 +12,6 @@
 .pointer {
   @apply cursor-pointer; /* Tailwind 4 uses 'cursor-pointer' directly */
 }
-.dark-bg {
-  @apply bg---color-light-green: #002E2D;
-}
 
 @theme {
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
