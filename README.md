@@ -110,9 +110,9 @@ The value comes from solving problems I can’t avoid in real products such as s
 
 ### Context
 
-- useUserDataContext
-- useThemeContext: isDark
-- useToastsContext: addToast("Success!", "success)
+- UserDataContext
+- ThemeContext: isDark
+- ToastsContext: addToast("Success!", "success)
 
 
 ##### BluePrint
