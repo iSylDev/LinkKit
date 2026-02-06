@@ -40,24 +40,24 @@ const Avatar = () => {
       avatarIsOpen && (
         <div
           ref={menuRef}
-          className="absolute right-0 flex flex-col border border-gray-200 rounded-xl shadow-md w-64 animate-in">
+          className="absolute right-0 flex flex-col border border-gray-300 rounded-xl shadow-md w-64 animate-in dark:bg-light-green dark:border-dark-border">
           <div className="flex items-center gap-3 px-4 pt-3">
             <img src="/image1.jpg" alt="Avatar" className="w-10 h-10 rounded-full" />
             <span className="min-w-0">
-              <h3 className="font-bold text-sm">Krypto Lily</h3>
-              <p className="truncate text-sm text-gray-600 font-medium">emily101@gmail.com</p>
+              <h3 className="font-bold text-sm dark:text-white mb-1">Krypto Lily</h3>
+              <p className="truncate text-sm text-gray-600 font-medium dark:text-gray-400">emily101@gmail.com</p>
             </span>
           </div>
 
           {/* Divider */}
-          <div className="h-1 w-full border-b border-b-gray-200 my-3"></div>
+          <div className="h-1 w-full border-b border-b-gray-200 dark:border-b-dark-border mt-4 mb-2"></div>
 
           <div className="px-4 flex justify-between ">
             <div className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-gray-600 w-5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="stroke-gray-600 dark:stroke-gray-300 w-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
               </svg>
-              <p>Theme</p>
+              <p className="dark:text-gray-400">Theme</p>
             </div>
 
             {/* Sun Button */}
@@ -84,10 +84,10 @@ const Avatar = () => {
               </button>
             </div>
           </div>
-          <div className="h-1 w-full border-b border-b-gray-200 mt-3"></div>
+          <div className="h-1 w-full border-b border-b-gray-200 dark:border-b-dark-border mt-2"></div>
 
-          <button className="w-full flex gap-2 px-4 py-3 hover:cursor-pointer hover:bg-gray-200 animate rounded-bl-lg rounded-br-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="gray" className="w-6">
+          <button className="w-full flex gap-2 px-4 py-3 hover:cursor-pointer hover:bg-gray-200 animate rounded-bl-lg rounded-br-lg dark:text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}  className="w-6 stroke-gray-500 dark:stroke-gray-300 ">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
             </svg>
             Logout
