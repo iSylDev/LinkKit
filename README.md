@@ -79,7 +79,6 @@ The value comes from solving problems I can’t avoid in real products such as s
 - BookmarkGrid/ Bookmark List
 - BookmarkCard
 - TagsShowcase
-- BookmarkActions
 - AddBookmarkModal
 - TagFilterList
 
