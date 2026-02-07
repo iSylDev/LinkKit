@@ -10,7 +10,7 @@ function App() {
       <div className="container flex items-center justify-center mx-auto">
 
       <Avatar />
-      {/* <StatsShowcase /> */}
+      <StatsShowcase />
       {/* <TagsShowcase /> */}
       <Options />
       </div>
