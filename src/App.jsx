@@ -3,18 +3,18 @@ import Options from "./components/options/Options"
 import StatsShowcase from "./ui/StatsShowcase"
 import TagsShowcase from "./ui/TagsShowcase"
 import Sorter from "./components/sorter/Sorter"
+import Card from "./components/Card"
 
 function App() {
 
   return (
     <>
-      <div className="container flex items-center justify-center mx-auto">
+      <div className="container flex items-center gap-15 mx-auto">
 
+
+      
       <Avatar />
-      {/* <StatsShowcase /> */}
-      <Sorter />
-      {/* <TagsShowcase /> */}
-      {/* <Options /> */}
+
       </div>
     </>
   )

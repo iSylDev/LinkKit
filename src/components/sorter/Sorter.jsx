@@ -1,6 +1,7 @@
 import { ArrowDownUp, Check } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { sorterInfor } from './sorterInfo';
+import { useClickOutside } from '../../helpers/useClickOutside';
 
 const Sorter = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,28 +13,15 @@ const Sorter = () => {
     setIsOpen(!isOpen)
   }
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen])
+  useClickOutside(menuRef, () => setIsOpen(false))
 
   return (<div
     ref={menuRef}
     className='relative'>
     <button
       onClick={() => setIsOpen(!isOpen)}
-      className={`flex items-center gap-1 bg-white dark:bg-dark-green hover:bg-gray-200 dark:hover:bg-light-green p-2 rounded-lg border border-gray-300 dark:border-dark-border animate ${
-        !isOpen && 'pointer'
-      }`}>
+      className={`flex items-center gap-1 bg-white dark:bg-dark-green hover:bg-gray-200 dark:hover:bg-light-green p-2 rounded-lg border border-gray-300 dark:border-dark-border animate ${!isOpen && 'pointer'
+        }`}>
       <ArrowDownUp className={`w-7 stroke-gray-700 dark:stroke-gray-300`} />
       <p className='text-black dark:text-white'>Sort by</p>
     </button>

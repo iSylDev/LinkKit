@@ -1,35 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTheme } from "../contexts/UserThemeContext";
 import { Palette, Sun, Moon, LogOut } from 'lucide-react'
+import { useClickOutside } from "../helpers/useClickOutside";
+
+
 const Avatar = () => {
   const [avatarIsOpen, setAvatarIsOpen] = useState(false);
   const { isDark, setIsDark } = useTheme();
 
   const menuRef = useRef(null)
+  useClickOutside(menuRef, () => setAvatarIsOpen(false))
 
-
-  function toggleAvatar() {
-    setAvatarIsOpen(!avatarIsOpen)
-  }
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setAvatarIsOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [avatarIsOpen])
 
 
   return (<div className="relative" ref={menuRef}>
     <button
-      onClick={() => toggleAvatar()}
+      onClick={() => setAvatarIsOpen(!avatarIsOpen)}
       className={`w-11 h-11 rounded-full overflow-clip border border-transparent  duration-200 ease-in transition-all ${!avatarIsOpen && 'hover:border-white pointer'
         }`}>
       <img src="/image1.jpg" alt="Avatar" />
@@ -39,7 +25,6 @@ const Avatar = () => {
     {
       avatarIsOpen && (
         <div
-
           className={`absolute right-0 bg-white flex flex-col border border-gray-300 rounded-xl shadow-md w-64 animate-in dark:bg-light-green dark:border-dark-border`}>
           <div className="flex items-center gap-3 px-4 pt-3">
             <img src="/image1.jpg" alt="Avatar" className="w-10 h-10 rounded-full" />
