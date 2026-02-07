@@ -16,7 +16,7 @@ const TagSelector = () => {
       <p className='text-gray-600 dark:text-white'>Ai</p>
     </div>
 
-    <div className='w-6 h-6 flex items-center justify-center rounded-full border border-[#E8F0EF] bg-[#E8F0EF] dark:border-[#015856]'>
+    <div className='w-6 h-6 flex items-center justify-center rounded-full border border-[#E8F0EF] bg-[#E8F0EF] dark:bg-dark-border dark:border-[#015856]'>
         <p className='text-gray-600 dark:text-white text-sm'>1</p>
       </div>
 
