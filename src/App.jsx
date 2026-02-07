@@ -5,6 +5,7 @@ import TagsShowcase from "./ui/TagsShowcase"
 import Sorter from "./components/sorter/Sorter"
 import Card from "./components/Card"
 import TagSelector from "./components/TagSelector"
+import SignUpPage from "./pages/SignUpPage"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
 
       <TagSelector />
       <Avatar />
+      <SignUpPage />
 
       </div>
     </>
