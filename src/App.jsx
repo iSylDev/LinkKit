@@ -1,5 +1,5 @@
 import Avatar from "./ui/Avatar"
-import Options from "./ui/options/Options"
+import Options from "./components/options/Options"
 import StatsShowcase from "./ui/StatsShowcase"
 import TagsShowcase from "./ui/TagsShowcase"
 
