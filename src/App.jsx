@@ -2,6 +2,7 @@ import Avatar from "./ui/Avatar"
 import Options from "./components/options/Options"
 import StatsShowcase from "./ui/StatsShowcase"
 import TagsShowcase from "./ui/TagsShowcase"
+import Sorter from "./components/sorter/Sorter"
 
 function App() {
 
@@ -10,9 +11,10 @@ function App() {
       <div className="container flex items-center justify-center mx-auto">
 
       <Avatar />
-      <StatsShowcase />
+      {/* <StatsShowcase /> */}
+      <Sorter />
       {/* <TagsShowcase /> */}
-      <Options />
+      {/* <Options /> */}
       </div>
     </>
   )
