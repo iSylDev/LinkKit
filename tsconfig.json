@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
-    /* Path Aliases (For Shadcn UI) */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     },
 
     /* File Layout */
-    "rootDir": "./src",
     "outDir": "./dist",
     "allowImportingTsExtensions": true,
     "noEmit": true,
@@ -17,26 +15,20 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-
-    /* Other Outputs */
-    "sourceMap": true,
-    "declaration": false,
-    "declarationMap": false,
+    "types": ["vite/client", "node"], 
 
     /* Stricter Typechecking Options */
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": false, // Set to false for Shadcn compatibility
 
     /* Recommended Options */
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["src", "vite.config.ts"],
   "exclude": ["node_modules"]
 }
