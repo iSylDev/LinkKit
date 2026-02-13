@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { OptionData } from "./OptionsData.js";
-import { useClickOutside } from "../../helpers/useClickOutside.jsx";
+// import { useClickOutside } from "../../helpers/useClickOutside";
 import {EllipsisVertical} from 'lucide-react'
 
 const Options = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuRef = useRef(null);
-  useClickOutside(menuRef, () => setIsOpen(false))
+  // useClickOutside(menuRef, () => setIsOpen(false))
 
   return (<div
-    ref={menuRef}
+    // ref={menuRef}
     className="relative">
     <button
       onClick={() => setIsOpen(!isOpen)}
