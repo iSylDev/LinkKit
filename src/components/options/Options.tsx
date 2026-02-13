@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { OptionData } from "./OptionsData";
-import { useClickOutside } from "../../helpers/useClickOutside";
+import { OptionData } from "./OptionsData.js";
+import { useClickOutside } from "../../helpers/useClickOutside.jsx";
 import {EllipsisVertical} from 'lucide-react'
 
 const Options = () => {

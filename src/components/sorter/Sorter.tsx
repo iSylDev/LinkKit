@@ -1,7 +1,7 @@
 import { ArrowDownUp, Check } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import { sorterInfor } from './sorterInfo';
-import { useClickOutside } from '../../helpers/useClickOutside';
+import { sorterInfor } from './sorterInfo.js';
+import { useClickOutside } from '../../helpers/useClickOutside.jsx';
 
 const Sorter = () => {
   const [isOpen, setIsOpen] = useState(false);

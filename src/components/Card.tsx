@@ -1,7 +1,7 @@
-import Options from "./options/Options";
-import Divider from '../ui/Divider'
-import TagsShowcase from "../ui/TagsShowcase";
-import StatsShowcase from "../ui/StatsShowcase";
+import Options from "./options/Options.js";
+import Divider from '../ui/Divider.jsx'
+import TagsShowcase from "../ui/TagsShowcase.jsx";
+import StatsShowcase from "../ui/StatsShowcase.jsx";
 
 
 const Card = () => {
