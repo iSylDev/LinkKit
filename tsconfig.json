@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
+    /* Path Aliases (For Shadcn UI) */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* File Layout */
     "rootDir": "./src",
-    // outDir is ignored when noEmit is true, but fine to keep
     "outDir": "./dist",
     "allowImportingTsExtensions": true,
     "noEmit": true,
@@ -16,16 +21,15 @@
 
     /* Other Outputs */
     "sourceMap": true,
-    // DISABLED: You cannot have declaration maps when noEmit is true
     "declaration": false,
     "declarationMap": false,
 
     /* Stricter Typechecking Options */
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
+    "strict": true,
 
     /* Recommended Options */
-    "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
