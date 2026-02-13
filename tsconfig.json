@@ -17,7 +17,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": [],
+    "types": ["vite/client"],
 
     /* Other Outputs */
     "sourceMap": true,
