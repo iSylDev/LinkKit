@@ -42,6 +42,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-icons: var(--icons);
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px 1px rgb(0 0 0 / 0.08), 0 2px 2px -2px rgb(0 0 0 / 0.1);
   --shadow-xl:
@@ -81,7 +82,7 @@
   --sidebar-accent-foreground: #4c5c59;
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --icons: oklch(0.205 0 0);
+  --icons: oklch(44.59% 0.00005 271.152);
 }
 
 .dark {
@@ -116,6 +117,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: #002e2d;
   --sidebar-ring: oklch(0.556 0 0);
+  --icon: oklch(100% 0.00011 271.152);
 }
 
 * {

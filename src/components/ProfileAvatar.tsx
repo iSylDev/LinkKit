@@ -5,6 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
@@ -17,36 +18,34 @@ export default function ProfileAvatar() {
       <DropdownMenuTrigger asChild className="hover:cursor-pointer">
         <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar size='lg'>
-            <AvatarImage src="/image1.jpg" alt="shadcn" />
+            <AvatarImage src="/image1.jpg" alt="Avatar" />
             <AvatarFallback>AVT</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-65 border-border" side='bottom' align='end' >
-        <DropdownMenuGroup className="text-card-foreground">
-          <DropdownMenuItem
-            onSelect={(e) => e.preventDefault()}
-            className="pt-2 pb-3 select-text hover:cursor-text  data-highlighted:bg-popover data-highlighted:text-card-foreground"
+        <DropdownMenuGroup>
+          <DropdownMenuLabel
+            className="pt-2 pb-3 flex gap-2"
           >
             <Avatar size='lg'>
-              <AvatarImage src="/image1.jpg" alt="shadcn" />
+              <AvatarImage src="/image1.jpg" alt="Avatar" />
               <AvatarFallback>AVT</AvatarFallback>
             </Avatar>
             <div>
               <h3 className="font-semibold text-foreground">Krypto Lily</h3>
               <p>ikryptolily@gmail.com</p>
             </div>
-          </DropdownMenuItem>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onSelect={(e) => e.preventDefault()}
-            className="flex justify-between py-2 hover:cursor-text data-highlighted:bg-popover data-highlighted:text-card-foreground">
-            <span className="flex items-center text-base gap-2 select-text">
+          <DropdownMenuLabel
+            className="flex justify-between py-2">
+            <span className="flex items-center text-base gap-2">
               <Palette className="size-5" />
               <p>Theme</p>
             </span>
             <ThemeToggler />
-          </DropdownMenuItem>
+          </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
