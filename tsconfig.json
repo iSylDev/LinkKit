@@ -20,7 +20,9 @@
     /* Stricter Typechecking Options */
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": false, // Set to false for Shadcn compatibility
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true, 
 
     /* Recommended Options */
     "jsx": "react-jsx",

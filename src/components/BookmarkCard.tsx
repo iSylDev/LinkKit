@@ -2,20 +2,18 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
+  CardHeader
 } from "@/components/ui/card"
-import { AvatarImage } from "./ui/avatar";
 import { CardOptionsDropDown } from "./CardOptionsDropdown";
 import { badgeOptions } from "./cardOptionsData";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
+import StatsShowcase from "./StatsShowcase";
 
 const BookmarkCard = () => {
   return (
-    <Card className="max-h-68 min-h-68 w-full max-w-97.5 border-border">
+    <Card className="'min-h-[280px] h-auto w-full max-w-97.5 border-border py-0 pt-5">
       <CardHeader>
         <div className="flex gap-3 items-center">
           <div>
@@ -30,11 +28,11 @@ const BookmarkCard = () => {
           <CardOptionsDropDown />
         </CardAction>
       </CardHeader>
-      <div className="px-4 flex justify-center -mt-4 -mb-3">
+      <div className="px-4 flex justify-center -mt-4 -mb-1">
         <Separator />
       </div>
-      <CardContent>
-        <p className="text-sm font-medium">The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.</p>
+      <CardContent className="px-4 flex-1">
+        <p className="text-sm font-medium line-clamp-4 leading-6">The MDN Web Doogies including HTML, Ceb The MDN Web Doogies including HTML, Ceb The MDN Web Doogies including HTML, Ceb The MDN Web Doogies including HTML, Ceb The MDN Web Doogies including HTML, Ceb apps.</p>
         <div className="flex flex-wrap gap-2 mt-4">
           {
             badgeOptions.map((option) => (
@@ -45,10 +43,12 @@ const BookmarkCard = () => {
           }
         </div>
       </CardContent>
-      <Separator />
-      <CardFooter>
-
-      </CardFooter>
+      <div>
+        <Separator className="" />
+        <CardFooter className="justify-self-start w-full px-4">
+          <StatsShowcase />
+        </CardFooter>
+      </div>
     </Card>);
 }
 

@@ -1,5 +1,4 @@
 import { Sorter } from "@/components/Sorter";
-import Options from "../components/options/Options";
 import ProfileAvatar from "../components/ProfileAvatar";
 import BookmarkCard from "@/components/BookmarkCard";
 
