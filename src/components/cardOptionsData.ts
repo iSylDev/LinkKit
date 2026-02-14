@@ -13,3 +13,5 @@ export const cardOptions = [
   { label: "Edit", icon: Pencil, action: () => console.log("Edit") },
   { label: "Archive", icon: Archive, action: () => console.log("Archive"), variant: "destructive" as const },
 ]
+
+export const badgeOptions = ['Reference', 'HTML', 'CSS', 'Javascript' ]

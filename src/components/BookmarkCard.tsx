@@ -10,6 +10,8 @@ import {
 import { AvatarImage } from "./ui/avatar";
 import { CardOptionsDropDown } from "./CardOptionsDropdown";
 import { DropdownMenuSeparator } from "./ui/dropdown-menu";
+import { badgeOptions } from "./cardOptionsData";
+import { Badge } from "./ui/badge";
 
 const BookmarkCard = () => {
   return (
@@ -30,10 +32,20 @@ const BookmarkCard = () => {
       </CardHeader>
       <DropdownMenuSeparator className="-mt-4 -mb-2 mx-6" />
       <CardContent>
-        <p className="text-sm">The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.</p>
+        <p className="text-sm font-medium">The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.</p>
+        <div className="flex flex-wrap gap-2 mt-4">
+          {
+            badgeOptions.map((option) => (
+              <Badge variant='secondary' className="text-[#4c5c59] rounded-md">
+                {option}
+              </Badge>
+            ))
+          }
+        </div>
       </CardContent>
+      <DropdownMenuSeparator />
       <CardFooter>
-        <p>Card Footer</p>
+        
       </CardFooter>
     </Card>);
 }
