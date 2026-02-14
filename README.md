@@ -36,13 +36,10 @@ The value comes from solving problems I can’t avoid in real products such as s
 
 
 ## Tech Stack
-- Frontend: React, React Router
-- Styling: Tailwind CSS
+- Frontend: React, React Router, Zustand
+- Styling/ Components: Tailwind CSS, Shadcn
 - Backend & Auth: Supabase (Database + Authentication)
 - Media Storage: Cloudinary
-
-## Approach
-- I’m minimizing state and context usage wherever possible, delegating fetching, loading, and submission states to React Router. The goal is a cleaner architecture that leverages URL-driven state and built-in data handling rather than scattered local state.
 
 
 ### Data Models
@@ -79,53 +76,6 @@ The value comes from solving problems I can’t avoid in real products such as s
 
 - bookmark_id: uuid
 - tag_id: uuid
-
-### /Components
-
-- App
-- MainLayout
-- Sidebar
-- Topbar
-- SearchBar
-- BookmarkGrid/ Bookmark List
-- BookmarkCard
-- TagsShowcase
-- AddBookmarkModal
-- TagFilterList
-
-### /ui
-
-- Avatar
-- Button
-- Input
-- StatsShowcase
-- Badge
-- Options
-- DropDown
-- Toast
-
-### Routes
-
-- /sign-up
-- /sign-in
-- /forgot-password
-- /dashboard
-- dashboard/archived
-- dashboard/tag/:tagName
-
-### Pages
-
-- SignUpPage
-- SignInPage
-- ForgotPasswordPage
-- Dashboard
-
-### Context
-
-- UserDataContext
-- ThemeContext: isDark
-- ToastsContext: addToast("Success!", "success)
-
 
 ##### BluePrint
 

@@ -11,6 +11,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ArrowUpDown } from "lucide-react"
 
 export function Sorter() {
   const [position, setPosition] = React.useState("bottom")
@@ -18,15 +19,17 @@ export function Sorter() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">
+          <ArrowUpDown />
+          <p>Sort by</p>
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-32">
+      <DropdownMenuContent className="w-52" align='end'>
         <DropdownMenuGroup>
-          <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
           <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-            <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="top">Recently Added</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="bottom">Recently visited</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="right">Most visited</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuGroup>
       </DropdownMenuContent>
