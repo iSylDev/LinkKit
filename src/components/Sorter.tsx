@@ -18,13 +18,13 @@ export function Sorter() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="hover:cursor-pointer w-fit px-3" >
         <Button variant="outline">
           <ArrowUpDown />
           <p>Sort by</p>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-52" align='end'>
+      <DropdownMenuContent className="w-52 gap-4" align='end'>
         <DropdownMenuGroup>
           <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
             <DropdownMenuRadioItem value="top">Recently Added</DropdownMenuRadioItem>

@@ -13,7 +13,7 @@ The value comes from solving problems I can’t avoid in real products such as s
 
 ### User Stories
 
-- [ ] Users should be able to sign in or sign up with Discord, email and password or Google.
+- [ ] Users should be able to sign in or sign up with Discord or email & password.
 - [ ] Users should be able to add new bookmarks with a title, description, website URL, and tags
 - [ ] Users should be able to view all their bookmarks
 - [ ] Users should be able to search for bookmarks by title in the search bar
