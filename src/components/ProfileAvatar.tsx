@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
-import { ArrowLeft, ArrowRight, ArrowRightCircle, ArrowRightSquare, Palette } from "lucide-react"
+import { ArrowRightCircle, Palette } from "lucide-react"
 import { ThemeToggler } from "./ThemeToggler"
 
 export default function ProfileAvatar() {

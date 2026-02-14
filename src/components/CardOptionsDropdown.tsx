@@ -11,7 +11,7 @@ import { cardOptions } from "./cardOptionsData"
 export function CardOptionsDropDown() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild >
+      <DropdownMenuTrigger asChild className="bg-card ">
         <Button variant="outline" className="p-1.5">
           <EllipsisVertical className="size-5 text-foreground" />
         </Button>

@@ -3,6 +3,8 @@ import { AppSidebar } from '../components/AppSidebar'
 import ProfileAvatar from '@/components/ProfileAvatar';
 import BookmarkCard from '@/components/BookmarkCard';
 import { Searchbar } from '@/components/Searchbar';
+import { Button } from '@/components/ui/button';
+import {Plus} from 'lucide-react'
 
 
 const Dashboard = () => {
@@ -13,17 +15,24 @@ const Dashboard = () => {
 
 
         <main className='flex flex-col gap-12 bg-background'>
-          <header className='bg-card flex items-center px-6 py-3'>
+          <header className='bg-card flex items-center justify-between px-6 py-5 lg:px-9'>
           <div className='flex items-center gap-3'>
             <SidebarTrigger className='lg:hidden' />
             <Searchbar />
           </div>
 
-
+          <div className='flex items-center gap-3 lg:gap-4'>
+            <Button className='flex gap-2 p-2 lg:p-5 '>
+              <Plus className='size-5' />
+              <p className='hidden md:block'>Add Bookmark</p>
+            </Button>
+            <ProfileAvatar />
+          </div>
           </header>
-          <h3>Dashboard context</h3>
-          <ProfileAvatar />
-          <BookmarkCard />
+
+          <div className='px-6 lg:px-9'>
+            <BookmarkCard />
+          </div>
         </main>
       </SidebarInset>
     </div>
