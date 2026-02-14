@@ -4,7 +4,6 @@ import {
   FORGOT_PASSWORD,
   SIGNIN,
   SIGNUP,
-  AUTH
 } from '../routes/routesConstants';
 import { Route } from 'react-router-dom';
 
