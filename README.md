@@ -1,3 +1,6 @@
+📦 The "What"
+LinkKit is a user-friendly bookmark manager built as a "digital chest" for users who want their links always within reach.
+
 🧭 The "Why"
 I’m building LinkKit because tutorials only take you so far. I wanted to break things and fix them. Specifically tricky stuff like URL-based state, messy async flows, and making a PWA that doesn't feel like a website.
 
@@ -29,8 +32,8 @@ The goal isn't just "making it work." It's about handling the complexity you onl
 - [ ] User should be able to install the app on their mobile and access it offline
 - [ ] Automatically fetch website metadata (favicon, title, description) when adding a bookmark URL
 
-
 ## Tech Stack
+
 - Frontend: React, React Router, Zustand
 - Form Management: Zod, React Form Hook
 - Styling/ Components: Tailwind CSS, Shadcn
