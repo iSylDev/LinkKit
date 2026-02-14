@@ -13,7 +13,7 @@ const Dashboard = () => {
 
 
         <main className='flex flex-col gap-12 bg-background'>
-          <header className='bg-card px-6 py-2'>
+          <header className='bg-card flex items-center px-6 py-3'>
           <div className='flex items-center gap-3'>
             <SidebarTrigger className='lg:hidden' />
             <Searchbar />
