@@ -17,12 +17,12 @@ export function CardOptionsDropDown() {
           <EllipsisVertical className="size-5 text-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-50" >
+      <DropdownMenuContent align="end" className="w-50 py-1" >
         {
           cardOptions.map((option) => (
             <DropdownMenuItem id={option.label} className="py-2 px-3 text-base text-foreground font-light gap-3" onClick={option.action}>
               <option.icon  />
-              <p className="font-medium">{option.label}</p>
+              <p >{option.label}</p>
             </DropdownMenuItem>
           ))
         }

@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/card"
 import { AvatarImage } from "./ui/avatar";
 import { CardOptionsDropDown } from "./CardOptionsDropdown";
-import { DropdownMenuSeparator } from "./ui/dropdown-menu";
 import { badgeOptions } from "./cardOptionsData";
 import { Badge } from "./ui/badge";
+import { Separator } from "./ui/separator";
 
 const BookmarkCard = () => {
   return (
@@ -30,7 +30,9 @@ const BookmarkCard = () => {
           <CardOptionsDropDown />
         </CardAction>
       </CardHeader>
-      <DropdownMenuSeparator className="-mt-4 -mb-2 mx-6" />
+      <div className="px-4 flex justify-center -mt-4 -mb-3">
+        <Separator />
+      </div>
       <CardContent>
         <p className="text-sm font-medium">The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.</p>
         <div className="flex flex-wrap gap-2 mt-4">
@@ -43,9 +45,9 @@ const BookmarkCard = () => {
           }
         </div>
       </CardContent>
-      <DropdownMenuSeparator />
+      <Separator />
       <CardFooter>
-        
+
       </CardFooter>
     </Card>);
 }
