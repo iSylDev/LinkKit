@@ -23,7 +23,7 @@ export default function ProfileAvatar() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-65 border-border" side='bottom' align='end' >
+      <DropdownMenuContent sideOffset={12} className="w-65 border-border" side='bottom' align='end' >
         <DropdownMenuGroup>
           <DropdownMenuLabel
             className="pt-2 pb-3 flex gap-2"
