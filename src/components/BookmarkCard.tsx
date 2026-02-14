@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/card"
 import { AvatarImage } from "./ui/avatar";
 import { CardOptionsDropDown } from "./CardOptionsDropdown";
+import { DropdownMenuSeparator } from "./ui/dropdown-menu";
 
 const BookmarkCard = () => {
   return (
-    <Card className="max-h-68 min-h-68 w-full max-w-97.5">
+    <Card className="max-h-68 min-h-68 w-full max-w-97.5 border-border">
       <CardHeader>
         <div className="flex gap-3 items-center">
           <div>
@@ -27,8 +28,9 @@ const BookmarkCard = () => {
           <CardOptionsDropDown />
         </CardAction>
       </CardHeader>
+      <DropdownMenuSeparator className="-mt-4 -mb-2 mx-6" />
       <CardContent>
-        <p>Card Content</p>
+        <p className="text-sm">The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.</p>
       </CardContent>
       <CardFooter>
         <p>Card Footer</p>

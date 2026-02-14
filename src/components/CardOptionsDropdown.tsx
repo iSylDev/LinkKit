@@ -20,9 +20,9 @@ export function CardOptionsDropDown() {
       <DropdownMenuContent align="end" className="w-50" >
         {
           cardOptions.map((option) => (
-            <DropdownMenuItem id={option.label} className="py-2" onClick={option.action}>
-              <option.icon />
-              <p>{option.label}</p>
+            <DropdownMenuItem id={option.label} className="py-2 px-3 text-base text-foreground font-light gap-3" onClick={option.action}>
+              <option.icon  />
+              <p className="font-medium">{option.label}</p>
             </DropdownMenuItem>
           ))
         }
