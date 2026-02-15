@@ -2,7 +2,9 @@ import { BookmarkCheck } from 'lucide-react'
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/store/useAuthStore';
 const SignUpPage = () => {
+  const { signInWithDiscord, isLoading, error } = useAuthStore();
 
   return (<div className="container bg-white p-7">
     <header>
@@ -38,7 +40,10 @@ const SignUpPage = () => {
     </FieldGroup>
 
     <div className='mt-9'>
-      <Button className='py-6 w-full bg-[#5D6AF2] hover:bg-[#5D6AF2]/80' variant={'outline'}>
+      <Button 
+        disabled={isLoading}
+        onClick={signInWithDiscord}
+        className='py-6 w-full bg-[#5D6AF2] hover:bg-[#5D6AF2]/80' variant={'outline'}>
         <img src="/discordlogo.svg" alt="discord logo" className='w-5' />
         <p className='text-white'>Sign up with Discord</p>
       </Button>
