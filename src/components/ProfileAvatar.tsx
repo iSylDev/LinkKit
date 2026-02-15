@@ -15,7 +15,7 @@ import { ThemeToggler } from "./ThemeToggler"
 export default function ProfileAvatar() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="hover:cursor-pointer">
+      <DropdownMenuTrigger asChild className="hover:cursor-pointer md:hidden">
         <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar size='lg'>
             <AvatarImage src="/image1.jpg" alt="Avatar" />

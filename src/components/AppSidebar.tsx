@@ -8,6 +8,7 @@ import {
 import { BookmarkCheck, House, Archive } from "lucide-react"
 import { NavLink } from "react-router-dom"
 import { TagCheckbox } from "./TagCheckbox"
+import MobileUserInfo from "./DesktopUserInfo"
 
 export function AppSidebar() {
   return (
@@ -37,7 +38,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <div className="p-4">User Profile</div>
+        <MobileUserInfo />
       </SidebarFooter>
     </Sidebar>
   )
