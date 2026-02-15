@@ -16,6 +16,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: "",
 
+  // Sign in with Discord Function
   signInWithDiscord: async () => {
     set({ isLoading: true });
 
@@ -32,11 +33,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (discordSigninError) throw discordSigninError;
     } catch (error: any) {
       set({ error: error.message || "Error signing in with Discord." });
-    } finally {
-      set({ isLoading: false });
     }
   },
 
+  // Sign out Function
   signOut: async () => {
     set({ isLoading: true, error: "" });
 

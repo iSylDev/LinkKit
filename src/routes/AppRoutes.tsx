@@ -11,16 +11,20 @@ import SignInPage from '../pages/SignInPage.tsx';
 import SignUpPage from '../pages/SignUpPage.tsx';
 import ForgotPasswordPage from '../pages/ForgotPassword.tsx';
 import Dashboard from '../pages/Dashboard.tsx';
+import { AuthInitializer } from './Auth/AuthInitializer.tsx';
 
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path='/' >
-        <Route path={`/${SIGNIN}`} element={<SignInPage />} />
-        <Route path={`/${SIGNUP}`} element={<SignUpPage />} />
-        <Route path={`/${FORGOT_PASSWORD}`} element={<ForgotPasswordPage />} />
-        <Route path={`/${DASHBOARD}`} element={<Dashboard />} />
-      </Route>
-    )
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route
+      path='/'
+      element={<AuthInitializer />}
+    >
+      <Route path={`/${SIGNIN}`} element={<SignInPage />} />
+      <Route path={`/${SIGNUP}`} element={<SignUpPage />} />
+      <Route path={`/${FORGOT_PASSWORD}`} element={<ForgotPasswordPage />} />
+      <Route path={`/${DASHBOARD}`} element={<Dashboard />} />
+    </Route>
   )
+)
 
 export default router;

@@ -3,8 +3,19 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
+import { Spinner } from '@/components/ui/spinner';
+import { useNavigate } from 'react-router-dom';
+
+
+
 const SignUpPage = () => {
-  const { signInWithDiscord, isLoading, error } = useAuthStore();
+  const { signInWithDiscord, isLoading, error, signOut } = useAuthStore();
+  const navigate = useNavigate()
+
+  async function handleSignOut() {
+    await signOut();
+    navigate('/sign-in')
+  }
 
   return (<div className="container bg-white p-7">
     <header>
@@ -40,13 +51,20 @@ const SignUpPage = () => {
     </FieldGroup>
 
     <div className='mt-9'>
-      <Button 
+      <Button
         disabled={isLoading}
         onClick={signInWithDiscord}
         className='py-6 w-full bg-[#5D6AF2] hover:bg-[#5D6AF2]/80' variant={'outline'}>
-        <img src="/discordlogo.svg" alt="discord logo" className='w-5' />
-        <p className='text-white'>Sign up with Discord</p>
+        {
+          !isLoading
+            ? (<div className='flex gap-2'>
+              <img src="/discordlogo.svg" alt="discord logo" className='w-5' />
+              <p className='text-white'>Sign up with Discord</p>
+            </div>)
+            : (<Spinner />)
+        }
       </Button>
+      {error && <p className='text-destructive text-right py-3'>{error}</p>}
     </div>
 
   </div>);
