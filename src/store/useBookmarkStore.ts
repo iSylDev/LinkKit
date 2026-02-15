@@ -38,9 +38,10 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
         .order("created_at", { ascending: false });
 
       if (error) throw error;
+
       const cleanedData = data.map((b: any) => ({
         ...b,
-        tags: b.bookmark_tags.map((bt: any) => bt.tags.name),
+        tags: b.bookmark_tags?.map((bt: any) => bt.tags.name).filter(Boolean) || []
       }));
       set({ bookmarks: cleanedData });
     } catch (error: any) {
@@ -81,11 +82,11 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
           bookmark_id: newBookmark.id,
           tag_id: tag.id,
         }));
-        
+
         const { error: mergeError } = await supabase
-        .from("bookmark_tags")
-        .insert(mergedData);
-        
+          .from("bookmark_tags")
+          .insert(mergedData);
+
         if (mergeError) throw mergeError;
       }
 
