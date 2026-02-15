@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -120,6 +120,14 @@
   --sidebar-border: #002e2d;
   --sidebar-ring: oklch(0.556 0 0);
   --icon: oklch(100% 0.00011 271.152);
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('./assets/fonts/Manrope-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 200 800; /* Defines the supported range */
+  font-display: swap;
+  font-style: normal;
 }
 
 * {

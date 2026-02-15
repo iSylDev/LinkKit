@@ -7,10 +7,11 @@ import {
 } from "@/components/ui/sidebar"
 import { BookmarkCheck, House, Archive } from "lucide-react"
 import { NavLink } from "react-router-dom"
+import { TagCheckbox } from "./TagCheckbox"
 
 export function AppSidebar() {
   return (
-    <Sidebar variant='sidebar'  collapsible="icon">
+    <Sidebar variant='sidebar' collapsible="icon">
       <SidebarHeader className="px-2">
         <div className="flex items-center gap-3 p-4 font-bold">
           <label className="p-1 rounded-lg bg-primary" >
@@ -29,9 +30,10 @@ export function AppSidebar() {
           </NavLink>
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="px-3">
         <SidebarGroup>
-           {/* Your Menu Items Here */}
+          <h3 className="text-xs text-foreground mb-5 -pl-1 mt-7">TAGS</h3>
+          <TagCheckbox />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
