@@ -1,11 +1,11 @@
 import { Spinner } from "@/components/ui/spinner";
+import { useUser } from "@/hooks/useUser";
 import { SIGNIN } from "@/routes/routesConstants";
-import { useAuthStore } from "@/store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
 
 
 const ProtectedRoute = () => {
-  const { user, isLoading } = useAuthStore();
+  const { data: user, isLoading } = useUser();
 
   if (isLoading) return <Spinner />
 

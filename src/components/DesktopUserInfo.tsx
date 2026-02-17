@@ -4,9 +4,11 @@ import { SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "
 import { Palette, ArrowRightCircle } from "lucide-react"
 import { ThemeToggler } from "./ThemeToggler"
 import { useAuthStore } from "@/store/useAuthStore"
+import { useUser } from "@/hooks/useUser"
 
 const DesktopUserInfo = () => {
-  const { user, signOut } = useAuthStore();
+  const { signOut } = useAuthStore();
+  const { data: user } = useUser()
   const userEmail = user?.email || 'isydev@gmail.com';
   const meta_data = user?.user_metadata || {}
   const username = meta_data.name

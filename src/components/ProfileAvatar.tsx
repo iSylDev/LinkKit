@@ -13,9 +13,11 @@ import { ArrowRightCircle, Palette } from "lucide-react"
 import { ThemeToggler } from "./ThemeToggler"
 import { useAuthStore } from '@/store/useAuthStore.ts';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "@/hooks/useUser"
 
 export default function ProfileAvatar() {
-  const { signOut, user } = useAuthStore();
+  const { signOut } = useAuthStore();
+  const { data: user } = useUser();
   const navigate = useNavigate();
   const userEmail = user?.email || 'isydev@gmail.com';
   const meta_data = user?.user_metadata || {}
@@ -35,7 +37,7 @@ export default function ProfileAvatar() {
       <DropdownMenuTrigger asChild className="hover:cursor-pointer md:hidden">
         <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar size='lg'>
-            <AvatarImage src="/image1.jpg" alt="Avatar" />
+            <AvatarImage src={userImage} alt="Avatar" />
             <AvatarFallback>AVT</AvatarFallback>
           </Avatar>
         </Button>

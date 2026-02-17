@@ -1,34 +1,32 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, replace, useNavigate } from "react-router-dom";
 import supabase from "../../components/ui/utils/supabase";
 import { useEffect } from "react";
 import { DASHBOARD, SIGNIN } from "../routesConstants";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AuthInitializer = () => {
-  const setUser = useAuthStore((state) => state.setUser);
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 1. Initial Check
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
+    const { data: {subscription} } = supabase.auth.onAuthStateChange((event,session) =>{
+      const user = session?.user ?? null;
 
-    // 2. Auth Listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-      
-      if (event === 'SIGNED_IN') {
-        // Use { replace: true } to clean up the URL hash (/#access_token=...)
-        navigate(`/${DASHBOARD}`, { replace: true });
+      // Manually update the 'auth-user' cache to trigger immediate component reaction
+      queryClient.setQueryData(['auth-user'], user);
+
+      if ( event === 'SIGNED_IN') {
+        navigate(`/${DASHBOARD}`, {replace: true})
       }
       if (event === 'SIGNED_OUT') {
-        navigate(`/${SIGNIN}`, { replace: true });
+        queryClient.setQueryData(['auth-user'], null)
+        navigate(`/${SIGNIN}`, {replace: true})
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [setUser, navigate])
+  }, [queryClient, navigate])
 
   return <Outlet />
 }
