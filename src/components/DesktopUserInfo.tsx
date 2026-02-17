@@ -6,7 +6,7 @@ import { ThemeToggler } from "./ThemeToggler"
 import { useAuthStore } from "@/store/useAuthStore"
 
 const DesktopUserInfo = () => {
-  const { user } = useAuthStore();
+  const { user, signOut } = useAuthStore();
   const userEmail = user?.email || 'isydev@gmail.com';
   const meta_data = user?.user_metadata || {}
   const username = meta_data.name
@@ -42,9 +42,10 @@ const DesktopUserInfo = () => {
 
         {/* Log Out Section */}
         <SidebarMenuItem>
-          <SidebarMenuButton 
+          <SidebarMenuButton
+          onClick={signOut}
             variant="default" 
-            className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 py-0"
+            className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 py-0 hover:cursor-pointer"
           >
             <ArrowRightCircle className="size-5" />
             <span className="text-sm font-medium">Log out</span>

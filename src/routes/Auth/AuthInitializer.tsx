@@ -2,6 +2,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Outlet, useNavigate } from "react-router-dom";
 import supabase from "../../components/ui/utils/supabase";
 import { useEffect } from "react";
+import { DASHBOARD, SIGNIN } from "../routesConstants";
 
 export const AuthInitializer = () => {
   const setUser = useAuthStore((state) => state.setUser);
@@ -19,10 +20,10 @@ export const AuthInitializer = () => {
       
       if (event === 'SIGNED_IN') {
         // Use { replace: true } to clean up the URL hash (/#access_token=...)
-        navigate('/dashboard', { replace: true });
+        navigate(`/${DASHBOARD}`, { replace: true });
       }
       if (event === 'SIGNED_OUT') {
-        navigate('/sign-in');
+        navigate(`/${SIGNIN}`, { replace: true });
       }
     });
 
