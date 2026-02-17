@@ -3,20 +3,27 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 import { Palette, ArrowRightCircle } from "lucide-react"
 import { ThemeToggler } from "./ThemeToggler"
+import { useAuthStore } from "@/store/useAuthStore"
 
 const DesktopUserInfo = () => {
+  const { user } = useAuthStore();
+  const userEmail = user?.email || 'isydev@gmail.com';
+  const meta_data = user?.user_metadata || {}
+  const username = meta_data.name
+  const userImage = meta_data?.picture || meta_data?.avatar_url || '/image1.jpg'
+
   return (
     <SidebarFooter className=" border border-border rounded-lg hidden md:flex">
       <SidebarMenu>
         {/* User Profile Section */}
         <div className="flex items-center gap-3 px-2 py-2">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="/image1.jpg" alt="Avatar" />
+            <AvatarImage src={userImage} alt="Avatar" />
             <AvatarFallback>AVT</AvatarFallback>
           </Avatar>
           <div className="flex flex-col text-left">
-            <span className="font-semibold text-foreground leading-tight">Krypto Lily</span>
-            <span className="text-xs text-muted-foreground truncate">ikryptolily@gmail.com</span>
+            <span className="font-semibold text-foreground leading-tight">{username}</span>
+            <span className="text-xs text-muted-foreground truncate">{userEmail}</span>
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -14,14 +15,18 @@ import { useAuthStore } from '@/store/useAuthStore.ts';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProfileAvatar() {
-  const { signOut } = useAuthStore();
+  const { signOut, user } = useAuthStore();
   const navigate = useNavigate();
+  const userEmail = user?.email || 'isydev@gmail.com';
+  const meta_data = user?.user_metadata || {}
+  const username = meta_data.name || 'John Doe'
+  const userImage = meta_data?.picture || meta_data?.avatar_url || '/image1.jpg'
 
   async function handleSignOut() {
     await signOut();
     navigate('/sign-in')
     console.log('Signed-out');
-    
+
   }
 
 
@@ -41,12 +46,12 @@ export default function ProfileAvatar() {
             className="pt-2 pb-3 flex gap-2"
           >
             <Avatar size='lg'>
-              <AvatarImage src="/image1.jpg" alt="Avatar" />
+              <AvatarImage src={userImage} alt="Avatar" />
               <AvatarFallback>AVT</AvatarFallback>
             </Avatar>
             <div>
-              <h3 className="font-semibold text-foreground">Krypto Lily</h3>
-              <p>ikryptolily@gmail.com</p>
+              <h3 className="font-semibold text-foreground">{username}</h3>
+              <p>{userEmail}</p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -61,10 +66,10 @@ export default function ProfileAvatar() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Button onClick={handleSignOut} variant="destructive" className="py-3 hover:cursor-pointer">
-            <ArrowRightCircle className="size-5 " />
-            <p>Log out</p>
-          </Button>
+          <DropdownMenuItem onClick={handleSignOut} className="py-3 w-full hover:cursor-pointer">
+              <ArrowRightCircle className="size-5 " />
+              <p>Log out</p>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
