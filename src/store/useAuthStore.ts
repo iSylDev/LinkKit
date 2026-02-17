@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import supabase from "@/components/ui/utils/supabase";
-import { type User } from "@supabase/supabase-js";
+import { type User, type Provider } from "@supabase/supabase-js";
 
 interface AuthState {
   user: User | null;
   isLoading: boolean;
   error: string;
-  signInWithDiscord: () => Promise<void>;
+  signInWithProvider: (provider: Provider) => Promise<void>;
   setUser: (user: User | null) => void;
   signOut: () => Promise<void>;
 }
@@ -16,26 +16,25 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: "",
 
-  // Sign in with Discord Function
-  signInWithDiscord: async () => {
+  // Sign in Function
+  signInWithProvider: async (provider: Provider) => {
     set({ isLoading: true });
 
     try {
-      const { error: discordSigninError } = await supabase.auth.signInWithOAuth(
-        {
-          provider: "discord",
-          options: {
-            redirectTo: window.location.origin,
-          },
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo:
+            typeof window !== "undefined" ? window.location.origin : "",
         },
-      );
-
-      if (discordSigninError) throw discordSigninError;
+      });
+      if (error) throw error;
     } catch (error: any) {
-      set({ error: error.message || "Error signing in with Discord." });
+      set({ error: error.message || `Error signing in with ${provider}` });
+    } finally {
+      set({ isLoading: false });
     }
   },
-
   // Sign out Function
   signOut: async () => {
     set({ isLoading: true, error: "" });
@@ -46,9 +45,9 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       set({ user: null });
     } catch (error: any) {
-      set({ error: error.message || 'Failed to sign out' });
+      set({ error: error.message || "Failed to sign out" });
     } finally {
-      set({ isLoading: false })
+      set({ isLoading: false });
     }
   },
 

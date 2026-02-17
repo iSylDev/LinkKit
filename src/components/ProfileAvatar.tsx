@@ -11,8 +11,21 @@ import {
 } from "../components/ui/dropdown-menu"
 import { ArrowRightCircle, Palette } from "lucide-react"
 import { ThemeToggler } from "./ThemeToggler"
+import { useAuthStore } from '@/store/useAuthStore.ts';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileAvatar() {
+  const { signOut } = useAuthStore();
+  const navigate = useNavigate();
+
+  async function handleSignOut() {
+    await signOut();
+    navigate('/sign-in')
+    console.log('Signed-out');
+    
+  }
+
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="hover:cursor-pointer md:hidden">
@@ -49,10 +62,10 @@ export default function ProfileAvatar() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem variant="destructive" className="py-3 hover:cursor-pointer">
+          <Button onClick={handleSignOut} variant="destructive" className="py-3 hover:cursor-pointer">
             <ArrowRightCircle className="size-5 " />
             <p>Log out</p>
-          </DropdownMenuItem>
+          </Button>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
