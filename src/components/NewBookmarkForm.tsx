@@ -15,13 +15,13 @@ import {
 
 export function NewBookmarkForm() {
   return (
-    <FieldGroup className="max-w-sm">
+    <FieldGroup className="w-full">
       <Field>
         <FieldLabel htmlFor="block-end-input">Title *</FieldLabel>
-        <InputGroup className="h-auto">
+        <InputGroup className="h-auto ">
           <InputGroupInput id="block-end-input" placeholder="Google Meet" />
         </InputGroup>
-        <FieldDescription>Footer positioned below the input.</FieldDescription>
+        <FieldDescription className="text-destructive text-sm">Title is required</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor="block-end-textarea">Textarea</FieldLabel>
@@ -30,11 +30,11 @@ export function NewBookmarkForm() {
             id="block-end-textarea"
             placeholder="Write a comment..."
           />
-          <InputGroupAddon align="block-end">
-          <p>Description is required</p>
-            <InputGroupText>0/280</InputGroupText>
-          </InputGroupAddon>
         </InputGroup>
+          <div className="flex justify-between">
+          <p className="text-destructive text-sm">Description is required</p>
+            <InputGroupText>0/280</InputGroupText>
+          </div>
         <FieldDescription>
           Footer positioned below the textarea.
         </FieldDescription>
