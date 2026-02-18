@@ -20,7 +20,8 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
   bookmarks: [],
   isLoading: false,
   error: "",
-  // FUNCTION TO FETCH BOOKMARKS FROM SUPABASE
+  // FUNCTION TO FETCH B
+  // OOKMARKS FROM SUPABASE
   fetchBookmarks: async () => {
     set({ isLoading: true });
     set({ error: "" });

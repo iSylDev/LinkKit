@@ -10,7 +10,7 @@ const SignInPage = () => {
   const { isLoading, error, signInWithProvider } = useAuthStore();
 
   return (<section className='h-screen w-full flex justify-center items-center'>
-    <div className="container bg-white p-7 lg:w-[50%] rounded-xl">
+    <div className="container bg-white p-7 lg:w-[50%] 2xl:w-[30%] rounded-xl">
       <header>
         <div className="flex items-center gap-3 mb-9 font-bold">
           <label className="p-1 rounded-lg bg-primary" >

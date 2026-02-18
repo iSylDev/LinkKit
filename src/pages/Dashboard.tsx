@@ -3,9 +3,8 @@ import { AppSidebar } from '../components/AppSidebar'
 import ProfileAvatar from '@/components/ProfileAvatar';
 import BookmarkCard from '@/components/BookmarkCard';
 import { Searchbar } from '@/components/Searchbar';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react'
 import { SidebarProvider } from '../components/ui/sidebar.tsx'
+import { NewBookmarkModal } from '@/components/NewBookMarkModal.tsx';
 
 
 const Dashboard = () => {
@@ -25,10 +24,7 @@ const Dashboard = () => {
               </div>
 
               <div className='flex items-center gap-3 lg:gap-4'>
-                <Button className='flex gap-2 p-2 lg:p-5 '>
-                  <Plus className='size-5' />
-                  <p className='hidden md:block'>Add Bookmark</p>
-                </Button>
+                <NewBookmarkModal />
                 <ProfileAvatar />
               </div>
             </header>
