@@ -16,51 +16,47 @@ import { NewBookmarkSchema, type NewBookmarkInput, type NewBookmarkOutput } from
 import { z } from 'zod'
 import { useBookmarkStore } from "@/store/useBookmarkStore"
 import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { fetchMetaData } from "@/helpers/fetchMetaData"
 
-type NewBookmarkValues = z.infer<typeof NewBookmarkSchema >
+type NewBookmarkValues = z.infer<typeof NewBookmarkSchema>
 
 export function NewBookmarkForm() {
-  const [websiteImage, setWebsiteImage] = useState();
+  const [websiteImage, setWebsiteImage] = useState('');
   const { addBookmark } = useBookmarkStore();
 
-  const { register, handleSubmit, watch } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ resolver: zodResolver(NewBookmarkSchema) });
+  const { register, handleSubmit, watch,  formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ resolver: zodResolver(NewBookmarkSchema) });
 
   const watchedUrl = watch('websiteUrl');
+  const descriptionValue = watch('description')
+
+  // const { data: fetchedWebsiteUrl, error: websiteImageFetchError, isLoading: isFetchingWebsiteImage } = useQuery({
+  //   queryKey: ['meta_Data image', watchedUrl],
+  //   queryFn: () => fetchMetaData(watchedUrl),
+  //   enabled: !!watchedUrl && watchedUrl.length > 7 && watchedUrl.startsWith('http')
+  // });
 
 
-    const fetchMetaData = async () => {
-      if (watchedUrl && watchedUrl.startsWith('http')){
-        try {
-          const response = await fetch(`https://api.linkpreview.net/?fields=image,description=${url}`)
-          const data = await response.json()
 
-          if (data.image){
-            setWebsiteImage(data.image)
-          }
-        } catch (error) {
-          if (error) throw new Error('Error fetching website image')
-        }
-      }
-    }
+  function createNewBookmark(data: NewBookmarkOutput) {
+    // addBookmark(fetchedWebsiteUrl);
+    console.log(data)
 
-  
-  async function createNewBookmark(){
-    // addBookmark();
   }
   return (
 
 
-    <form onSubmit={() => handleSubmit}>
+    <form id="new-bookmark-form" onSubmit={handleSubmit(createNewBookmark)}>
       <FieldGroup className="w-full bg-card" >
         <Field>
           <FieldLabel htmlFor="block-end-input">Title *</FieldLabel>
           <InputGroup className="h-auto ">
             <InputGroupInput id="block-end-input" placeholder="Google Meet" {...register('title')} />
           </InputGroup>
-          <FieldDescription className="text-destructive text-sm">Title is required</FieldDescription>
+          {errors.title?.message && <FieldDescription className="text-destructive text-sm">{errors.title.message}</FieldDescription>}
         </Field>
         <Field>
-          <FieldLabel htmlFor="block-end-textarea">Description *</FieldLabel>
+          <FieldLabel htmlFor="block-end-textarea">Description </FieldLabel>
           <InputGroup>
             <Textarea
               id="block-end-textarea"
@@ -69,9 +65,8 @@ export function NewBookmarkForm() {
               {...register('description')}
             />
           </InputGroup>
-          <div className="flex justify-between">
-            <p className="text-destructive text-sm">Description is required</p>
-            <InputGroupText>0/280</InputGroupText>
+          <div className="flex justify-end">
+            <InputGroupText>{descriptionValue.length}/280 </InputGroupText>
           </div>
         </Field>
         <Field>
@@ -79,14 +74,14 @@ export function NewBookmarkForm() {
           <InputGroup className="h-auto ">
             <InputGroupInput id="block-end-input" placeholder="https://googlemeet.com" {...register("websiteUrl")} />
           </InputGroup>
-          <FieldDescription className="text-destructive text-sm">URL is required</FieldDescription>
+          {errors.websiteUrl?.message && <FieldDescription className="text-destructive text-sm">{errors.websiteUrl.message}</FieldDescription>}
         </Field>
         <Field>
           <FieldLabel htmlFor="block-end-input">Tags *</FieldLabel>
           <InputGroup className="h-auto ">
             <InputGroupInput id="block-end-input" placeholder="Mettings, Office, Productivity " {...register('tags')} />
           </InputGroup>
-          <FieldDescription className="text-destructive text-sm">At least one tag is required</FieldDescription>
+          {errors.tags?.message && <FieldDescription className="text-destructive text-sm">{errors.tags.message}</FieldDescription>}
         </Field>
       </FieldGroup>
     </form>

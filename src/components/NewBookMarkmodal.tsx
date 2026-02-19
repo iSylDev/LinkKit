@@ -33,7 +33,7 @@ export function NewBookmarkModal() {
           <DialogClose asChild >
             <Button variant='outline' className="px-3">Cancel</Button>
           </DialogClose>
-            <Button className="px-3" >Add Bookmark</Button>
+            <Button className="px-3" form="new-bookmark-form" >Add Bookmark</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

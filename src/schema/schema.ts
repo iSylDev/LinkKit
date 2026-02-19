@@ -2,8 +2,8 @@ import { z } from "zod";
 
 
 export const NewBookmarkSchema = z.object({
-  title: z.string().min(2).max(30),
-  description: z.string().min(0).max(70),
+  title: z.string().min(2, {message: 'Title cannot be less than 2 chars'}).max(30, {message: 'Title cannot be greater than 30 chars'}),
+  description: z.string().min(0).max(100, {message: 'description cannot be greater than 100 chars'}),
   websiteUrl: z.url({ message: 'Invalid URL' }),
   tags: z.string()
   .min(3, 'At least one tag is required')
