@@ -29,10 +29,11 @@ export function NewBookmarkModal() {
           </DialogDescription>
         </DialogHeader>
         <NewBookmarkForm />
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button >Close</Button>
+        <DialogFooter className="flex flex-row justify-end">
+          <DialogClose asChild >
+            <Button variant='outline' className="px-3">Cancel</Button>
           </DialogClose>
+            <Button className="px-3" >Add Bookmark</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

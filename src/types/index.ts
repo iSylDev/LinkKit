@@ -12,3 +12,10 @@ export interface Bookmark {
   created_at: string;
   tags:[];
 }
+
+export type NewBookmarkProp = {
+  title: string;
+  description: string;
+  websiteurl: string;
+  tags: string[];
+}
