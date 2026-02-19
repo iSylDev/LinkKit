@@ -45,12 +45,18 @@ export function NewBookmarkForm() {
 
 
   function createNewBookmark(data: NewBookmarkOutput) {
-    if (fetchedWebsiteData.image) setWebsiteImage(fetchedWebsiteData.image);
-    if (!descriptionValue && fetchedWebsiteData.description) setDescription(fetchedWebsiteData.description);
+    const websiteImage = fetchedWebsiteData.image || '';
+    const finalDescription = data.description || fetchedWebsiteData?.description || ''
 
     console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
-    
-    addBookmark(data.websiteUrl, websiteImage, data.title, description, data.tags );
+
+    addBookmark(
+      data.websiteUrl,
+      websiteImage,
+      data.title,
+      finalDescription,
+      data.tags
+    );
   }
   return (
 

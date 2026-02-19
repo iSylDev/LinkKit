@@ -1,5 +1,6 @@
 import supabase from "@/components/ui/utils/supabase";
 import type { Bookmark } from "@/types";
+import type { User } from "@supabase/supabase-js";
 import { create } from "zustand";
 
 interface BookmarkState {
@@ -8,6 +9,7 @@ interface BookmarkState {
   error: string;
   fetchBookmarks: () => Promise<void>;
   addBookmark: (
+    user: User,
     url: string,
     image_url: string | null,
     title: string,
@@ -16,7 +18,7 @@ interface BookmarkState {
   ) => Promise<void>;
 }
 
-export const useBookmarkStore = create<BookmarkState>((set, get) => ({
+export const useBookmarkStore = create<BookmarkState>((set) => ({
   bookmarks: [],
   isLoading: false,
   error: "",
@@ -54,7 +56,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
   },
 
   // FUNCTION TO CREATE A NEW BOOKMARK
-  addBookmark: async (url, image_url, title, description, tags) => {
+  addBookmark: async (user, url, image_url, title, description, tags) => {
     set({ isLoading: true });
     set({ error: "" });
 
@@ -67,7 +69,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
       //  Insert the new bookmark
       const { data: newBookmark, error: createBookmarkError } = await supabase
         .from("bookmarks")
-        .insert([{ url, image_url, title, description }])
+        .insert([{ url, image_url, title, description, user_id: user.id }])
         .select()
         .single();
 
