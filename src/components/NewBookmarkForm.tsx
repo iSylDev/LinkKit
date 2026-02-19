@@ -14,16 +14,17 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewBookmarkSchema, type NewBookmarkInput, type NewBookmarkOutput } from "@/schema/schema"
 import { useBookmarkStore } from "@/store/useBookmarkStore"
-import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { fetchMetaData } from "@/helpers/fetchMetaData"
 import { useDebounce } from 'use-debounce';
 import { SpinnerText } from "./SpinnerText"
 import { Badge } from "./ui/badge"
 import { CircleAlert } from "lucide-react"
+import { useUser } from "@/hooks/useUser"
 
 export function NewBookmarkForm() {
   const { addBookmark } = useBookmarkStore();
+  const { data: user } = useUser()
 
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
     resolver: zodResolver(NewBookmarkSchema),
@@ -50,7 +51,13 @@ export function NewBookmarkForm() {
 
     console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
 
+    if (!user) {
+      console.error('No user found, Please log in again')
+      return
+    }
+
     addBookmark(
+      user,
       data.websiteUrl,
       websiteImage,
       data.title,
