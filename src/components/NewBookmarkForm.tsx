@@ -27,7 +27,7 @@ export function NewBookmarkForm() {
 
   const watchedUrl = watch('websiteUrl');
 
-  useEffect(() => {
+
     const fetchMetaData = async () => {
       if (watchedUrl && watchedUrl.startsWith('http')){
         try {
@@ -42,10 +42,6 @@ export function NewBookmarkForm() {
         }
       }
     }
-
-    const timer = setTimeout(fetchMetaData, 1000)
-    return () => clearTimeout(timer)
-  },[watchedUrl])
 
   
   async function createNewBookmark(){
