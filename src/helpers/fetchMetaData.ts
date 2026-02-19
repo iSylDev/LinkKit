@@ -5,7 +5,7 @@ export const fetchMetaData = async (watchedUrl: string) => {
   if (watchedUrl && watchedUrl.startsWith("http")) {
     try {
       const response = await fetch(
-        // `https://api.linkpreview.net/?key=${apiKey}&q=${watchedUrl}`,
+        `https://api.linkpreview.net/?key=${apiKey}&q=${watchedUrl}`,
       );
       const data = await response.json();
       console.log(data);

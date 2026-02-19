@@ -11,8 +11,13 @@ import {
 } from "@/components/ui/dialog"
 import { Plus } from 'lucide-react'
 import { NewBookmarkForm } from "./NewBookmarkForm"
+import { useBookmarkStore } from "@/store/useBookmarkStore"
+import { SpinnerText } from "./SpinnerText"
+import { Spinner } from "./ui/spinner"
 
 export function NewBookmarkModal() {
+  const {isLoading} = useBookmarkStore()
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,7 +38,10 @@ export function NewBookmarkModal() {
           <DialogClose asChild >
             <Button variant='outline' className="px-3">Cancel</Button>
           </DialogClose>
-            <Button className="px-3" form="new-bookmark-form" >Add Bookmark</Button>
+            <Button disabled={isLoading} className="px-3" form="new-bookmark-form" >
+              {isLoading && <Spinner />}
+              {isLoading ? <p className="text-xs">Adding Bookmark</p>  : <p>Add Bookmark</p> }
+              </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
