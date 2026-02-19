@@ -53,10 +53,10 @@ export function NewBookmarkForm() {
       <FieldGroup className="w-full bg-card" >
         <Field>
           <FieldLabel
-            htmlFor="block-end-input">Title *</FieldLabel>
+            htmlFor="title">Title *</FieldLabel>
           <InputGroup className="h-auto ">
             <InputGroupInput
-              id="block-end-input"
+              id="title"
               placeholder="Google Meet" {...register('title')}
               aria-invalid={!!errors.title}
             />
@@ -64,10 +64,10 @@ export function NewBookmarkForm() {
           {errors.title?.message && <FieldDescription className="text-destructive text-sm">{errors.title.message}</FieldDescription>}
         </Field>
         <Field>
-          <FieldLabel htmlFor="block-end-textarea">Description </FieldLabel>
+          <FieldLabel htmlFor="description">Description </FieldLabel>
           <InputGroup>
             <Textarea
-              id="block-end-textarea"
+              id="description"
               placeholder="A platform for my meetings..."
               className="max-h-30"
               {...register('description')}
@@ -78,10 +78,10 @@ export function NewBookmarkForm() {
           </div>
         </Field>
         <Field>
-          <FieldLabel htmlFor="block-end-input">Website URL *</FieldLabel>
+          <FieldLabel htmlFor="url">Website URL *</FieldLabel>
           <InputGroup className="h-auto ">
             <InputGroupInput
-              id="block-end-input"
+              id="url"
               placeholder="https://googlemeet.com" {...register("websiteUrl")}
               aria-invalid={!!errors.websiteUrl}
             />
@@ -89,10 +89,10 @@ export function NewBookmarkForm() {
           {errors.websiteUrl?.message && <FieldDescription className="text-destructive text-sm">{errors.websiteUrl.message}</FieldDescription>}
         </Field>
         <Field>
-          <FieldLabel htmlFor="block-end-input">Tags *</FieldLabel>
+          <FieldLabel htmlFor="tags">Tags *</FieldLabel>
           <InputGroup className="h-auto ">
             <InputGroupInput
-              id="block-end-input"
+              id="tags"
               placeholder="Mettings, Office, Productivity " {...register('tags')}
               aria-invalid={!!errors.tags}
             />

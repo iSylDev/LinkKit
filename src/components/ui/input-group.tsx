@@ -22,11 +22,11 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3",
 
         // Focus state.
-        // "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot=input-group-control]:focus-visible]:ring-[3px]",
+        "has-[[data-slot=input-group-control]:focus-visible]:border-primary has-[[data-slot=input-group-control]:focus-visible]:border-2",
 
         // Error state.
-        "has-[[aria-invalid=true]]:not(:focus-within):ring-destructive/20",
-        "has-[[aria-invalid=true]]:not(:focus-within):border-destructive",
+        "has-aria-invalid:ring-destructive/20",
+        "has-aria-invalid:border-destructive",
 
         className
       )}
