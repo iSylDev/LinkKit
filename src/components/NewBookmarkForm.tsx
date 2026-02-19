@@ -31,7 +31,7 @@ export function NewBookmarkForm() {
     const fetchMetaData = async () => {
       if (watchedUrl && watchedUrl.startsWith('http')){
         try {
-          const response = await fetch()
+          const response = await fetch(`https://api.linkpreview.net/?fields=image,description=${url}`)
           const data = await response.json()
 
           if (data.image){
