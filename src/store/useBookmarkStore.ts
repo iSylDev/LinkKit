@@ -42,7 +42,8 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
 
       const cleanedData = data.map((b: any) => ({
         ...b,
-        tags: b.bookmark_tags?.map((bt: any) => bt.tags.name).filter(Boolean) || []
+        tags:
+          b.bookmark_tags?.map((bt: any) => bt.tags.name).filter(Boolean) || [],
       }));
       set({ bookmarks: cleanedData });
     } catch (error: any) {
@@ -55,8 +56,14 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
   // FUNCTION TO CREATE A NEW BOOKMARK
   addBookmark: async (url, image_url, title, description, tags) => {
     set({ isLoading: true });
+    set({ error: "" });
 
     try {
+      // Trim whitespaces in tags
+      const cleanTagNames = tags
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0);
+
       //  Insert the new bookmark
       const { data: newBookmark, error: createBookmarkError } = await supabase
         .from("bookmarks")
@@ -70,7 +77,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
       const { data: upsertedTags, error: upsertError } = await supabase
         .from("tags")
         .upsert(
-          tags.map((name) => ({ name })),
+          cleanTagNames.map((name) => ({ name })),
           { onConflict: "name" },
         )
         .select();
@@ -89,8 +96,7 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
           .insert(mergedData);
 
         if (mergeError) throw mergeError;
-        console.log('Bookmark created successfully');
-        
+        console.log("Bookmark created successfully");
       }
 
       // Update local ui state to reflect immediately

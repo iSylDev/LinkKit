@@ -23,8 +23,6 @@ import { Badge } from "./ui/badge"
 import { CircleAlert } from "lucide-react"
 
 export function NewBookmarkForm() {
-  const [websiteImage, setWebsiteImage] = useState('');
-  const [description, setDescription] = useState('')
   const { addBookmark } = useBookmarkStore();
 
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
