@@ -12,7 +12,7 @@ Mostly for my own growth, but I’m treating it like a real product. That means 
 
 ## Tech Stack
 
-- Frontend: React, React Router, Zustand
+- Frontend: React, React Router, Zustand, React Query
 - Form Management: Zod, React Form Hook
 - Styling/ Components: Tailwind CSS, Shadcn
 - Backend & Auth: Supabase (Database + Authentication)
