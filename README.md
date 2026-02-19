@@ -16,4 +16,3 @@ Mostly for my own growth, but I’m treating it like a real product. That means 
 - Form Management: Zod, React Form Hook
 - Styling/ Components: Tailwind CSS, Shadcn
 - Backend & Auth: Supabase (Database + Authentication)
-- Media Storage: Cloudinary
