@@ -10,7 +10,7 @@ Mostly for my own growth, but I’m treating it like a real product. That means 
 ## 💎 The Value
  The goal isn't just "making it work." It's about handling the complexity you only find in real products, like managing heavy data without the UI lagging and keeping the architecture clean while adding features.
 
-## Tech Stack
+## Tech Stack/ Libraries used
 
 - Frontend: React, React Router, Zustand
 - Data Fetching: React Query
