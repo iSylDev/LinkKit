@@ -25,7 +25,10 @@ export function NewBookmarkForm() {
   const [websiteImage, setWebsiteImage] = useState('');
   const { addBookmark } = useBookmarkStore();
 
-  const { register, handleSubmit, watch,  formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ resolver: zodResolver(NewBookmarkSchema) });
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ 
+    resolver: zodResolver(NewBookmarkSchema),
+    mode: 'onBlur'
+  });
 
   const watchedUrl = watch('websiteUrl');
   const descriptionValue = watch('description')
@@ -49,9 +52,14 @@ export function NewBookmarkForm() {
     <form id="new-bookmark-form" onSubmit={handleSubmit(createNewBookmark)}>
       <FieldGroup className="w-full bg-card" >
         <Field>
-          <FieldLabel htmlFor="block-end-input">Title *</FieldLabel>
+          <FieldLabel
+            htmlFor="block-end-input">Title *</FieldLabel>
           <InputGroup className="h-auto ">
-            <InputGroupInput id="block-end-input" placeholder="Google Meet" {...register('title')} />
+            <InputGroupInput
+              id="block-end-input"
+              placeholder="Google Meet" {...register('title')}
+              aria-invalid={!!errors.title}
+            />
           </InputGroup>
           {errors.title?.message && <FieldDescription className="text-destructive text-sm">{errors.title.message}</FieldDescription>}
         </Field>
@@ -66,20 +74,28 @@ export function NewBookmarkForm() {
             />
           </InputGroup>
           <div className="flex justify-end">
-            <InputGroupText>{descriptionValue.length}/280 </InputGroupText>
+            <InputGroupText>{descriptionValue?.length}/280 </InputGroupText>
           </div>
         </Field>
         <Field>
           <FieldLabel htmlFor="block-end-input">Website URL *</FieldLabel>
           <InputGroup className="h-auto ">
-            <InputGroupInput id="block-end-input" placeholder="https://googlemeet.com" {...register("websiteUrl")} />
+            <InputGroupInput
+              id="block-end-input"
+              placeholder="https://googlemeet.com" {...register("websiteUrl")}
+              aria-invalid={!!errors.websiteUrl}
+            />
           </InputGroup>
           {errors.websiteUrl?.message && <FieldDescription className="text-destructive text-sm">{errors.websiteUrl.message}</FieldDescription>}
         </Field>
         <Field>
           <FieldLabel htmlFor="block-end-input">Tags *</FieldLabel>
           <InputGroup className="h-auto ">
-            <InputGroupInput id="block-end-input" placeholder="Mettings, Office, Productivity " {...register('tags')} />
+            <InputGroupInput
+              id="block-end-input"
+              placeholder="Mettings, Office, Productivity " {...register('tags')}
+              aria-invalid={!!errors.tags}
+            />
           </InputGroup>
           {errors.tags?.message && <FieldDescription className="text-destructive text-sm">{errors.tags.message}</FieldDescription>}
         </Field>
