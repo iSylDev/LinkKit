@@ -15,11 +15,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { NewBookmarkSchema, type NewBookmarkInput, type NewBookmarkOutput } from "@/schema/schema"
 import { z } from 'zod'
 import { useBookmarkStore } from "@/store/useBookmarkStore"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { fetchMetaData } from "@/helpers/fetchMetaData"
-
-type NewBookmarkValues = z.infer<typeof NewBookmarkSchema>
+import { useDebounce } from 'use-debounce';
 
 export function NewBookmarkForm() {
   const [websiteImage, setWebsiteImage] = useState('');
@@ -33,17 +32,17 @@ export function NewBookmarkForm() {
   const watchedUrl = watch('websiteUrl');
   const descriptionValue = watch('description')
 
-  // const { data: fetchedWebsiteUrl, error: websiteImageFetchError, isLoading: isFetchingWebsiteImage } = useQuery({
-  //   queryKey: ['meta_Data image', watchedUrl],
-  //   queryFn: () => fetchMetaData(watchedUrl),
-  //   enabled: !!watchedUrl && watchedUrl.length > 7 && watchedUrl.startsWith('http')
-  // });
+  const { data: fetchedWebsiteData, error: websiteDataFetchError, isLoading: isFetchingWebsiteData } = useQuery({
+    queryKey: ['meta_Data image', watchedUrl],
+    queryFn: () => fetchMetaData(watchedUrl),
+    enabled: !!watchedUrl && watchedUrl.length > 7 && watchedUrl.startsWith('http')
+  });
 
 
 
   function createNewBookmark(data: NewBookmarkOutput) {
     // addBookmark(fetchedWebsiteUrl);
-    console.log(data)
+    console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
 
   }
   return (
