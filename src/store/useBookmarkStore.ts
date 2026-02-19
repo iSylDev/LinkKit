@@ -89,6 +89,8 @@ export const useBookmarkStore = create<BookmarkState>((set, get) => ({
           .insert(mergedData);
 
         if (mergeError) throw mergeError;
+        console.log('Bookmark created successfully');
+        
       }
 
       // Update local ui state to reflect immediately

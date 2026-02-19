@@ -13,37 +13,46 @@ import { Textarea } from "@/components/ui/textarea"
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewBookmarkSchema, type NewBookmarkInput, type NewBookmarkOutput } from "@/schema/schema"
-import { z } from 'zod'
 import { useBookmarkStore } from "@/store/useBookmarkStore"
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { fetchMetaData } from "@/helpers/fetchMetaData"
 import { useDebounce } from 'use-debounce';
+import { SpinnerText } from "./SpinnerText"
+import { Badge } from "./ui/badge"
+import { CircleAlert } from "lucide-react"
 
 export function NewBookmarkForm() {
   const [websiteImage, setWebsiteImage] = useState('');
+  const [description, setDescription] = useState('')
   const { addBookmark } = useBookmarkStore();
 
-  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ 
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
     resolver: zodResolver(NewBookmarkSchema),
     mode: 'onBlur'
   });
 
   const watchedUrl = watch('websiteUrl');
+  const [debouncedUrl] = useDebounce(watchedUrl, 2000);
+
   const descriptionValue = watch('description')
 
   const { data: fetchedWebsiteData, error: websiteDataFetchError, isLoading: isFetchingWebsiteData } = useQuery({
-    queryKey: ['meta_Data image', watchedUrl],
-    queryFn: () => fetchMetaData(watchedUrl),
-    enabled: !!watchedUrl && watchedUrl.length > 7 && watchedUrl.startsWith('http')
+    queryKey: ['website_data', debouncedUrl],
+    queryFn: () => fetchMetaData(debouncedUrl),
+    enabled: !!debouncedUrl && debouncedUrl.length > 7 && debouncedUrl.startsWith('http')
   });
 
 
 
-  function createNewBookmark(data: NewBookmarkOutput) {
-    // addBookmark(fetchedWebsiteUrl);
-    console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
 
+  function createNewBookmark(data: NewBookmarkOutput) {
+    if (fetchedWebsiteData.image) setWebsiteImage(fetchedWebsiteData.image);
+    if (!descriptionValue && fetchedWebsiteData.description) setDescription(fetchedWebsiteData.description);
+
+    console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
+    
+    addBookmark(data.websiteUrl, websiteImage, data.title, description, data.tags );
   }
   return (
 
@@ -63,7 +72,10 @@ export function NewBookmarkForm() {
           {errors.title?.message && <FieldDescription className="text-destructive text-sm">{errors.title.message}</FieldDescription>}
         </Field>
         <Field>
-          <FieldLabel htmlFor="description">Description </FieldLabel>
+          <div className="flex justify-between items-center">
+            <FieldLabel htmlFor="description">Description </FieldLabel>
+
+          </div>
           <InputGroup>
             <Textarea
               id="description"
@@ -77,7 +89,14 @@ export function NewBookmarkForm() {
           </div>
         </Field>
         <Field>
-          <FieldLabel htmlFor="url">Website URL *</FieldLabel>
+          <div className="flex justify-between items-center">
+            <FieldLabel htmlFor="url">Website URL *</FieldLabel>
+            {isFetchingWebsiteData && <SpinnerText text="Fetching Website Data" />}
+            {websiteDataFetchError && <Badge variant={'destructive'} className="border border-destructive bg-transparent text-destructive">
+              <CircleAlert />
+              <p>Couldn't fetch website data</p>
+            </Badge>}
+          </div>
           <InputGroup className="h-auto ">
             <InputGroupInput
               id="url"
@@ -98,6 +117,9 @@ export function NewBookmarkForm() {
           </InputGroup>
           {errors.tags?.message && <FieldDescription className="text-destructive text-sm">{errors.tags.message}</FieldDescription>}
         </Field>
+        {websiteDataFetchError &&
+          <p className="text-sm text-destructive">We couldn't fetch any info for the website your provided. Please enter a description manually.</p>
+        }
       </FieldGroup>
     </form>
   )
