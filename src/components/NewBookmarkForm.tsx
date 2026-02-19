@@ -15,13 +15,37 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { NewBookmarkSchema, type NewBookmarkInput, type NewBookmarkOutput } from "@/schema/schema"
 import { z } from 'zod'
 import { useBookmarkStore } from "@/store/useBookmarkStore"
+import { useEffect, useState } from "react"
 
 type NewBookmarkValues = z.infer<typeof NewBookmarkSchema >
 
 export function NewBookmarkForm() {
+  const [websiteImage, setWebsiteImage] = useState();
   const { addBookmark } = useBookmarkStore();
 
-  const { register, handleSubmit } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ resolver: zodResolver(NewBookmarkSchema) });
+  const { register, handleSubmit, watch } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({ resolver: zodResolver(NewBookmarkSchema) });
+
+  const watchedUrl = watch('websiteUrl');
+
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      if (watchedUrl && watchedUrl.startsWith('http')){
+        try {
+          const response = await fetch()
+          const data = await response.json()
+
+          if (data.image){
+            setWebsiteImage(data.image)
+          }
+        } catch (error) {
+          if (error) throw new Error('Error fetching website image')
+        }
+      }
+    }
+
+    const timer = setTimeout(fetchMetaData, 1000)
+    return () => clearTimeout(timer)
+  },[watchedUrl])
 
   
   async function createNewBookmark(){
