@@ -4,10 +4,18 @@ import ProfileAvatar from '@/components/ProfileAvatar';
 import BookmarkCard from '@/components/BookmarkCard';
 import { Searchbar } from '@/components/Searchbar';
 import { SidebarProvider } from '../components/ui/sidebar.tsx'
-import { NewBookmarkModal } from '@/components/NewBookMarkModal.tsx';
+import { NewBookmarkModal } from '@/components/NewBookMarkmodal.tsx'; 
+import { useBookmarkStore } from '@/store/useBookmarkStore.ts';
+import { useQuery } from '@tanstack/react-query';
 
 
 const Dashboard = () => {
+  const { fetchBookmarks } = useBookmarkStore();
+
+  const { data: bookmarkData, error, isLoading } = useQuery({
+    queryKey: ['bookmarks'],
+    queryFn: fetchBookmarks
+  })
   
 
 
@@ -30,7 +38,23 @@ const Dashboard = () => {
             </header>
 
             <div className='px-6 lg:px-9'>
-              <BookmarkCard />
+              {
+                bookmarkData?.map((bookmark) => (
+                  <BookmarkCard 
+                    id={bookmark.id}
+                    title={bookmark.title}
+                    description={bookmark.description}
+                    url={bookmark.url}
+                    image_url={bookmark.image_url}
+                    is_archived={bookmark.is_archived}
+                    is_pinned={bookmark.is_pinned}
+                    view_count={bookmark.view_count}
+                    last_visited_at={bookmark.last_visited_at}
+                    created_at={bookmark.created_at}
+                    tags={bookmark.tags}
+                    />
+                ))
+              }
             </div>
           </main>
         </SidebarInset>

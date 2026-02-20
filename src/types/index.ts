@@ -19,3 +19,10 @@ export type NewBookmarkProp = {
   websiteurl: string;
   tags: string[];
 }
+
+export type StatsShowcaseProp = {
+  view_count: number
+  last_visited_at: string;
+  created_at: string;
+  is_pinned: boolean
+}

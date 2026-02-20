@@ -46,7 +46,7 @@ export function NewBookmarkForm() {
 
 
   function createNewBookmark(data: NewBookmarkOutput) {
-    const websiteImage = fetchedWebsiteData.image || '';
+    const websiteImage = fetchedWebsiteData?.image || '';
     const finalDescription = data.description || fetchedWebsiteData?.description || ''
 
     console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
