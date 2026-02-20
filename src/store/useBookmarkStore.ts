@@ -8,6 +8,7 @@ interface BookmarkState {
   isLoading: boolean;
   error: string;
   fetchBookmarks: () => Promise<Bookmark[]>;
+  pin: (id: string, user_id: string) => Promise<void>;
   addBookmark: (
     user: User,
     url: string,
@@ -111,6 +112,21 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
       set({ error: error.message || "Error creating bookmark" });
     } finally {
       set({ isLoading: false });
+    }
+  },
+
+  // Pin Bookmark
+  pin: async (id:string, user_id: string) => {
+    try {
+      const { error } = await supabase
+    .from('bookmarks')
+    .update({ is_pinned: true })
+    .eq('id', id)
+    .eq('user_id', user_id);
+
+    if (error) throw error
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   },
 }));
