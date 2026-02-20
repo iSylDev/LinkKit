@@ -25,7 +25,7 @@ const Dashboard = () => {
       <div className='flex min-h-screen w-full'>
         <AppSidebar />
         <SidebarInset>
-          <main className='flex flex-col gap-12 bg-background'>
+          <main className='flex flex-col gap-12 bg-background pb-12'>
             <header className='bg-card flex items-center justify-between px-6 py-5 lg:px-9'>
               <div className='flex items-center gap-3'>
                 <SidebarTrigger className='md:hidden' />
@@ -38,7 +38,7 @@ const Dashboard = () => {
               </div>
             </header>
 
-            <div className='px-6 lg:px-9'>
+            <div className='px-6 lg:px-9 flex flex-wrap gap-7'>
               {
                 bookmarkData?.map((bookmark: Bookmark) => (
                   <BookmarkCard 
