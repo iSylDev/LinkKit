@@ -7,7 +7,7 @@ interface BookmarkState {
   bookmarks: Bookmark[];
   isLoading: boolean;
   error: string;
-  fetchBookmarks: () => Promise<void>;
+  fetchBookmarks: () => Promise<Bookmark[]>;
   addBookmark: (
     user: User,
     url: string,
@@ -22,9 +22,8 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
   bookmarks: [],
   isLoading: false,
   error: "",
-  // FUNCTION TO FETCH B
-  // OOKMARKS FROM SUPABASE
-  fetchBookmarks: async () => {
+  // FUNCTION TO FETCH BOOKMARKS FROM SUPABASE
+  fetchBookmarks: async (): Promise<Bookmark[]> => {
     set({ isLoading: true });
     set({ error: "" });
 
@@ -48,8 +47,10 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
           b.bookmark_tags?.map((bt: any) => bt.tags.name).filter(Boolean) || [],
       }));
       set({ bookmarks: cleanedData });
+      return cleanedData
     } catch (error: any) {
       set({ error: error.message || "Failed to fetch bookmarks" });
+      throw new Error(error.message)
     } finally {
       set({ isLoading: false });
     }

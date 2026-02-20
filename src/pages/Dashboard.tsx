@@ -7,12 +7,13 @@ import { SidebarProvider } from '../components/ui/sidebar.tsx'
 import { NewBookmarkModal } from '@/components/NewBookMarkmodal.tsx'; 
 import { useBookmarkStore } from '@/store/useBookmarkStore.ts';
 import { useQuery } from '@tanstack/react-query';
+import type { Bookmark } from '@/types/index.ts';
 
 
 const Dashboard = () => {
   const { fetchBookmarks } = useBookmarkStore();
 
-  const { data: bookmarkData, error, isLoading } = useQuery({
+  const { data: bookmarkData, error, isLoading } = useQuery<Bookmark[]>({
     queryKey: ['bookmarks'],
     queryFn: fetchBookmarks
   })
@@ -39,7 +40,7 @@ const Dashboard = () => {
 
             <div className='px-6 lg:px-9'>
               {
-                bookmarkData?.map((bookmark) => (
+                bookmarkData?.map((bookmark: Bookmark) => (
                   <BookmarkCard 
                     id={bookmark.id}
                     title={bookmark.title}
