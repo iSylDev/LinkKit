@@ -134,7 +134,11 @@ export const useBookmarkStore = create<BookmarkState>(() => ({
       throw error
     }
   },
+
+  // ////////////
   // View Bookmark
+  // ////////////
+
   view: (e, website_url: string) => {
     e.stopPropagation();
     window.open(website_url, "_blank", "noopener,noreferrer");
@@ -197,6 +201,10 @@ export const useBookmarkStore = create<BookmarkState>(() => ({
       return "Failed to copy to clipboard.";
     }
   },
+
+  // ////////////////
+  // ARCHIVE FUNCTION
+  // ////////////////
 
   archive: async (id: string, user_id: string, currentStatus: boolean) => {
     try {

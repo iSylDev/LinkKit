@@ -9,31 +9,89 @@ import { EllipsisVertical } from "lucide-react"
 import { getCardOptions } from "./cardOptionsData"
 import { useBookmarkStore } from "@/store/useBookmarkStore"
 import { useUser } from "@/hooks/useUser"
-import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { Bookmark } from "@/types"
 
-export function CardOptionsDropDown({id, url, is_pinned} :{id: string, url: string, is_pinned: boolean }) {
+export function CardOptionsDropDown({ id, url, is_pinned }: { id: string, url: string, is_pinned: boolean }) {
   const { pin, view, copy, archive } = useBookmarkStore();
-  const { data: user } = useUser(); 
+  const { data: user } = useUser();
   const queryClient = useQueryClient()
 
   const pinMutation = useMutation({
-    mutationFn: () => {
-      if (!user) throw new Error("User not found");
-      return pin(id, user.id, is_pinned)
+    mutationFn: () => pin(id, user!.id, is_pinned),
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['bookmarks'] });
+
+      const prevBookmarks = queryClient.getQueryData<Bookmark[]>(['bookmarks']);
+
+      // Optimistic Update Pin Icon
+      queryClient.setQueryData<Bookmark[]>(["bookmarks"], (old) => {
+        if (!old) return [];
+        return old.map((b) =>
+          b.id === id ? { ...b, is_pinned: !is_pinned } : b
+        );
+      });
+
+      // Return a context object with the snapshotted value
+      return { prevBookmarks };
     },
-    onSuccess: () =>{
+
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
       // Your Toast goes here
     },
-    onError: (error) => {
-      throw error
+    onError: (error, newTodo, context) => {
+      if (context?.prevBookmarks) {
+        queryClient.setQueryData(['bookmarks'], context.prevBookmarks);
+      }
+      throw error;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
     }
-  })
+  });
+
+
+  // const archiveMutation = useMutation({
+  //   mutationFn: () => archive(id, user!.id, is_pinned),
+
+  //   onMutate: async () => {
+  //     await queryClient.cancelQueries({ queryKey: ['bookmarks'] });
+
+  //     const prevBookmarks = queryClient.getQueryData<Bookmark[]>(['bookmarks']);
+
+  //     // Optimistic Update Pin Icon
+  //     queryClient.setQueryData<Bookmark[]>(["bookmarks"], (old) => {
+  //       if (!old) return [];
+  //       return old.map((b) =>
+  //         b.id === id ? { ...b, is_pinned: !is_pinned } : b
+  //       );
+  //     });
+
+  //     // Return a context object with the snapshotted value
+  //     return { prevBookmarks };
+  //   },
+
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
+  //     // Your Toast goes here
+  //   },
+  //   onError: (error, newTodo, context) => {
+  //     if (context?.prevBookmarks) {
+  //       queryClient.setQueryData(['bookmarks'], context.prevBookmarks);
+  //     }
+  //     throw error;
+  //   },
+  //   onSettled: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
+  //   }
+  // })
 
   const cardOptions = getCardOptions({
     id,
     url,
-    actions:{
+    actions: {
       onView: (e) => view(e, url),
       onCopy: () => copy(url),
       onPin: () => pinMutation.mutate(),
@@ -54,7 +112,7 @@ export function CardOptionsDropDown({id, url, is_pinned} :{id: string, url: stri
         {
           cardOptions.map((option) => (
             <DropdownMenuItem id={option.label} className="py-2 px-3 text-base text-foreground font-light gap-3" onClick={option.action}>
-              <option.icon  />
+              <option.icon />
               <p >{option.label}</p>
             </DropdownMenuItem>
           ))
