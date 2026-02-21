@@ -1,17 +1,38 @@
-import {ExternalLink,
+import {
+  ExternalLink,
   Copy,
   Pin,
   Pencil,
   Archive,
-  EllipsisVertical,} from 'lucide-react'
+  EllipsisVertical,
+} from "lucide-react";
 
 
-export const cardOptions = [
-  { label: "View", icon: ExternalLink, action: () => console.log("View") },
-  { label: "Copy", icon: Copy, action: () => console.log("Copy") },
-  { label: "Pin", icon: Pin, action: () => console.log("Pin") },
-  { label: "Edit", icon: Pencil, action: () => console.log("Edit") },
-  { label: "Archive", icon: Archive, action: () => console.log("Archive"), variant: "destructive" as const },
-]
+type GetCardOptionsProp = {
+  id: string;
+  url: string;
+  actions: {
+    onView: (e: React.MouseEvent) => void;
+    onCopy: () => void;
+    onPin: () => void;
+    onEdit: () => void;
+    onArchive: () => void;
+  };
+};
 
-export const badgeOptions = ['Reference', 'HTML', 'CSS', 'Javascript' ]
+export function getCardOptions(props: GetCardOptionsProp) {
+  const { actions } = props;
+
+  return [
+    { label: "View", icon: ExternalLink, action: actions.onView },
+    { label: "Copy", icon: Copy, action: actions.onCopy },
+    { label: "Pin", icon: Pin, action: actions.onPin },
+    { label: "Edit", icon: Pencil, action: actions.onEdit },
+    {
+      label: "Archive",
+      icon: Archive,
+      action: () => console.log("Archive"),
+      variant: "destructive" as const,
+    },
+  ];
+}

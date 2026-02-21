@@ -6,9 +6,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { EllipsisVertical } from "lucide-react"
-import { cardOptions } from "./cardOptionsData"
+import { getCardOptions } from "./cardOptionsData"
+import { useBookmarkStore } from "@/store/useBookmarkStore"
 
-export function CardOptionsDropDown() {
+export function CardOptionsDropDown({id, url} :{id: string, url: string }) {
+  const { pin, view, copy } = useBookmarkStore()
+
+  const option = getCardOptions({
+    id,
+    url,
+    actions:{
+      onView: (e) => view(e, url),
+      onCopy: () => copy(url),
+      onPin: () => 
+    }
+  })
+
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="bg-card ">
