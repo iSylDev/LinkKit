@@ -9,6 +9,8 @@ interface BookmarkState {
   error: string;
   fetchBookmarks: () => Promise<Bookmark[]>;
   pin: (id: string, user_id: string) => Promise<void>;
+  view: (e: React.MouseEvent<HTMLElement>, website_url: string) => void;
+  copy: (website_url: string) => Promise<string>;
   addBookmark: (
     user: User,
     url: string,
@@ -17,13 +19,26 @@ interface BookmarkState {
     description: string,
     tags: string[],
   ) => Promise<void>;
+  edit: (
+    id: string,
+    updates: {
+      title: string;
+      description: string;
+      url: string;
+      tags: string[];
+    },
+  ) => Promise<void>;
 }
 
 export const useBookmarkStore = create<BookmarkState>((set) => ({
   bookmarks: [],
   isLoading: false,
   error: "",
+
+  // /////////////////////////////////////////
   // FUNCTION TO FETCH BOOKMARKS FROM SUPABASE
+  // /////////////////////////////////////////
+
   fetchBookmarks: async (): Promise<Bookmark[]> => {
     set({ isLoading: true });
     set({ error: "" });
@@ -48,16 +63,18 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
           b.bookmark_tags?.map((bt: any) => bt.tags.name).filter(Boolean) || [],
       }));
       set({ bookmarks: cleanedData });
-      return cleanedData
+      return cleanedData;
     } catch (error: any) {
       set({ error: error.message || "Failed to fetch bookmarks" });
-      throw new Error(error.message)
+      throw new Error(error.message);
     } finally {
       set({ isLoading: false });
     }
   },
 
+  // /////////////////////////////////
   // FUNCTION TO CREATE A NEW BOOKMARK
+  // /////////////////////////////////
   addBookmark: async (user, url, image_url, title, description, tags) => {
     set({ isLoading: true });
     set({ error: "" });
@@ -115,18 +132,98 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
     }
   },
 
-  // Pin Bookmark
-  pin: async (id:string, user_id: string) => {
+  // /////////////////////
+  // Pin Bookmark Function
+  // /////////////////////
+
+  pin: async (id: string, user_id: string) => {
     try {
       const { error } = await supabase
-    .from('bookmarks')
-    .update({ is_pinned: true })
-    .eq('id', id)
-    .eq('user_id', user_id);
+        .from("bookmarks")
+        .update({ is_pinned: true })
+        .eq("id", id)
+        .eq("user_id", user_id);
 
-    if (error) throw error
+      if (error) throw error;
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
+    }
+  },
+  // View Bookmark
+  view: (e, website_url: string) => {
+    e.stopPropagation();
+    window.open(website_url, "_blank", "noopener,noreferrer");
+  },
+
+  // //////////////////////
+  // Edit Bookmark Function
+  // //////////////////////
+  edit: async (id: string, { title, description, url, tags }) => {
+    try {
+      const { error: updateError } = await supabase
+        .from("bookmarks")
+        .update({ title, description, url })
+        .eq("id", id);
+
+      if (updateError) throw updateError;
+
+      const cleanTagNames = tags
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0);
+
+      const { data: upsertedTags, error: tagError } = await supabase
+        .from("tags")
+        .upsert(
+          cleanTagNames.map((name) => ({ name })),
+          { onConflict: "name" },
+        )
+        .select();
+      if (tagError) throw tagError;
+
+      // Sync Join Table
+      await supabase.from("bookmark_tags").delete().eq("bookmark_id", id);
+
+      if (upsertedTags && upsertedTags.length > 0) {
+        const linkedBookmark = upsertedTags.map((tag) => ({
+          bookmark_id: id,
+          tag_id: tag.id,
+        }));
+        const { error: linkError } = await supabase
+          .from("bookmark_tags")
+          .insert(linkedBookmark);
+
+        if (linkError) throw linkError;
+      }
+      return;
+    } catch (error: any) {
+      throw error;
+    }
+  },
+
+  // ///////////////////////
+  // Copy Bookmark Function
+  // ///////////////////////
+  copy: async (website_url) => {
+    try {
+      navigator.clipboard.writeText(website_url);
+      console.log("Copied to clipboard");
+      return "Copied to Clipboard.";
+    } catch (error) {
+      return "Failed to copy to clipboard.";
+    }
+  },
+
+  archive: async (id: string, user_id: string) => {
+    try {
+      const { error } = await supabase
+        .from("bookmarks")
+        .update({ is_pinned: true })
+        .eq("id", id)
+        .eq("user_id", user_id);
+
+      if (error) throw error;
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   },
 }));
