@@ -8,8 +8,14 @@ interface BookmarkState {
   isLoading: boolean;
   error: string;
   fetchBookmarks: () => Promise<Bookmark[]>;
-  pin: (id: string, user_id: string) => Promise<void>;
   view: (e: React.MouseEvent<HTMLElement>, website_url: string) => void;
+  pin: (id: string, user_id: string, currentStatus: boolean) => Promise<void>;
+  archive: (
+    id: string,
+    user_id: string,
+    currentStatus: boolean,
+  ) => Promise<void>;
+  delete: (id: string, user_id: string) => Promise<void>;
   copy: (website_url: string) => Promise<string>;
   addBookmark: (
     user: User,
@@ -136,11 +142,11 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
   // Pin Bookmark Function
   // /////////////////////
 
-  pin: async (id: string, user_id: string) => {
+  pin: async (id: string, user_id: string, currentStatus: boolean) => {
     try {
       const { error } = await supabase
         .from("bookmarks")
-        .update({ is_pinned: true })
+        .update({ is_pinned: !currentStatus })
         .eq("id", id)
         .eq("user_id", user_id);
 
@@ -213,15 +219,36 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
     }
   },
 
-  archive: async (id: string, user_id: string) => {
+  archive: async (id: string, user_id: string, currentStatus: boolean) => {
     try {
       const { error } = await supabase
         .from("bookmarks")
-        .update({ is_pinned: true })
+        .update({ is_archived: !currentStatus })
         .eq("id", id)
         .eq("user_id", user_id);
 
       if (error) throw error;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+
+  delete: async (id: string, user_id: string) => {
+    try {
+      const { error: tagsDeleteError } = await supabase
+        .from("bookmark_tags")
+        .delete()
+        .eq("bookmark_id", id);
+
+      if (tagsDeleteError) throw tagsDeleteError;
+
+      const { error: deleteBookmarkError } = await supabase
+        .from("bookmarks")
+        .delete()
+        .eq("id", id)
+        .eq("user_id", user_id);
+
+      if (deleteBookmarkError) throw deleteBookmarkError;
     } catch (error: any) {
       throw new Error(error.message);
     }
