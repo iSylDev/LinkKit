@@ -8,9 +8,11 @@ import {
 import { EllipsisVertical } from "lucide-react"
 import { getCardOptions } from "./cardOptionsData"
 import { useBookmarkStore } from "@/store/useBookmarkStore"
+import { useUser } from "@/hooks/useUser"
 
 export function CardOptionsDropDown({id, url} :{id: string, url: string }) {
-  const { pin, view, copy } = useBookmarkStore()
+  const { pin, view, copy, archive } = useBookmarkStore();
+  const { data: user } = useUser(); 
 
   const option = getCardOptions({
     id,
@@ -18,7 +20,9 @@ export function CardOptionsDropDown({id, url} :{id: string, url: string }) {
     actions:{
       onView: (e) => view(e, url),
       onCopy: () => copy(url),
-      onPin: () => 
+      onPin: () => user && pin(id, user.id, false), // Remember to fix this logic
+      onEdit: () => 
+      onArchive: () => user && archive(id, user.id, false)
     }
   })
 
