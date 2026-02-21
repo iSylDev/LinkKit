@@ -26,7 +26,7 @@ const BookmarkCard = ({ id, url, image_url, title, description, is_pinned, view_
           </div>
         </div>
         <CardAction>
-          <CardOptionsDropDown id={id} url={url} />
+          <CardOptionsDropDown id={id} url={url} is_pinned={is_pinned}/>
         </CardAction>
       </CardHeader>
       <div className="px-4 flex justify-center -mt-4 -mb-1">

@@ -9,10 +9,26 @@ import { EllipsisVertical } from "lucide-react"
 import { getCardOptions } from "./cardOptionsData"
 import { useBookmarkStore } from "@/store/useBookmarkStore"
 import { useUser } from "@/hooks/useUser"
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 
-export function CardOptionsDropDown({id, url} :{id: string, url: string }) {
+export function CardOptionsDropDown({id, url, is_pinned} :{id: string, url: string, is_pinned: boolean }) {
   const { pin, view, copy, archive } = useBookmarkStore();
   const { data: user } = useUser(); 
+  const queryClient = useQueryClient()
+
+  const pinMutation = useMutation({
+    mutationFn: () => {
+      if (!user) throw new Error("User not found");
+      return pin(id, user.id, is_pinned)
+    },
+    onSuccess: () =>{
+      queryClient.invalidateQueries({ queryKey: ['bookmarks'] })
+      // Your Toast goes here
+    },
+    onError: (error) => {
+      throw error
+    }
+  })
 
   const cardOptions = getCardOptions({
     id,
@@ -20,7 +36,7 @@ export function CardOptionsDropDown({id, url} :{id: string, url: string }) {
     actions:{
       onView: (e) => view(e, url),
       onCopy: () => copy(url),
-      onPin: () => user && pin(id, user.id, false), // Remember to fix this logic
+      onPin: () => pinMutation.mutate(),
       onEdit: () => console.log('Edit'),
       onArchive: () => user && archive(id, user.id, false)
     }

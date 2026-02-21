@@ -4,7 +4,6 @@ import {
   Pin,
   Pencil,
   Archive,
-  EllipsisVertical,
 } from "lucide-react";
 
 
