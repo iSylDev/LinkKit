@@ -54,7 +54,8 @@ export function NewBookmarkModal() {
   const { data: fetchedWebsiteData, error: websiteDataFetchError, isLoading: isFetchingWebsiteData } = useQuery({
     queryKey: ['website_data', debouncedUrl],
     queryFn: () => fetchMetaData(debouncedUrl),
-    enabled: !!debouncedUrl && debouncedUrl.length > 7 && debouncedUrl.startsWith('http')
+    enabled: !!debouncedUrl && debouncedUrl.length > 7 && debouncedUrl.startsWith('http') && !isSubmitting,
+    staleTime: 1000 * 60
   });
 
 
