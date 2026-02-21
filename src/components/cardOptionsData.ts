@@ -12,7 +12,7 @@ type GetCardOptionsProp = {
   id: string;
   url: string;
   actions: {
-    onView: (e: React.MouseEvent) => void;
+    onView: (e: React.MouseEvent<HTMLDivElement>) => void;
     onCopy: () => void;
     onPin: () => void;
     onEdit: () => void;
@@ -27,6 +27,7 @@ export function getCardOptions(props: GetCardOptionsProp) {
     { label: "View", icon: ExternalLink, action: actions.onView },
     { label: "Copy", icon: Copy, action: actions.onCopy },
     { label: "Pin", icon: Pin, action: actions.onPin },
+    { label: 'Edit', icon: Pencil, action: actions.onEdit },
     {
       label: "Archive",
       icon: Archive,

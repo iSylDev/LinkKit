@@ -12,7 +12,6 @@ import {
 import { Plus } from 'lucide-react'
 import { NewBookmarkForm } from "./NewBookmarkForm"
 import { useBookmarkStore } from "@/store/useBookmarkStore"
-import { SpinnerText } from "./SpinnerText"
 import { Spinner } from "./ui/spinner"
 
 export function NewBookmarkModal() {

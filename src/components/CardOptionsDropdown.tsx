@@ -14,14 +14,14 @@ export function CardOptionsDropDown({id, url} :{id: string, url: string }) {
   const { pin, view, copy, archive } = useBookmarkStore();
   const { data: user } = useUser(); 
 
-  const option = getCardOptions({
+  const cardOptions = getCardOptions({
     id,
     url,
     actions:{
       onView: (e) => view(e, url),
       onCopy: () => copy(url),
       onPin: () => user && pin(id, user.id, false), // Remember to fix this logic
-      onEdit: () => 
+      onEdit: () => console.log('Edit'),
       onArchive: () => user && archive(id, user.id, false)
     }
   })

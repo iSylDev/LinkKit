@@ -8,7 +8,7 @@ interface BookmarkState {
   isLoading: boolean;
   error: string;
   fetchBookmarks: () => Promise<Bookmark[]>;
-  view: (e: React.MouseEvent<HTMLElement>, website_url: string) => void;
+  view: (e: React.MouseEvent<HTMLDivElement>, website_url: string) => void;
   pin: (id: string, user_id: string, currentStatus: boolean) => Promise<void>;
   archive: (
     id: string,
