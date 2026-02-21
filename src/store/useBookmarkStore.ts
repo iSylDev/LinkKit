@@ -4,9 +4,6 @@ import type { User } from "@supabase/supabase-js";
 import { create } from "zustand";
 
 interface BookmarkState {
-  bookmarks: Bookmark[];
-  isLoading: boolean;
-  error: string;
   fetchBookmarks: () => Promise<Bookmark[]>;
   view: (e: React.MouseEvent<HTMLDivElement>, website_url: string) => void;
   pin: (id: string, user_id: string, currentStatus: boolean) => Promise<void>;
@@ -36,19 +33,13 @@ interface BookmarkState {
   ) => Promise<void>;
 }
 
-export const useBookmarkStore = create<BookmarkState>((set) => ({
-  bookmarks: [],
-  isLoading: false,
-  error: "",
+export const useBookmarkStore = create<BookmarkState>(() => ({
 
   // /////////////////////////////////////////
   // FUNCTION TO FETCH BOOKMARKS FROM SUPABASE
   // /////////////////////////////////////////
 
   fetchBookmarks: async (): Promise<Bookmark[]> => {
-    set({ isLoading: true });
-    set({ error: "" });
-
     try {
       const { data, error } = await supabase
         .from("bookmarks")
@@ -68,13 +59,10 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
         tags:
           b.bookmark_tags?.map((bt: any) => bt.tags.name).filter(Boolean) || [],
       }));
-      set({ bookmarks: cleanedData });
       return cleanedData;
+      
     } catch (error: any) {
-      set({ error: error.message || "Failed to fetch bookmarks" });
       throw new Error(error.message);
-    } finally {
-      set({ isLoading: false });
     }
   },
 
@@ -82,9 +70,6 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
   // FUNCTION TO CREATE A NEW BOOKMARK
   // /////////////////////////////////
   addBookmark: async (user, url, image_url, title, description, tags) => {
-    set({ isLoading: true });
-    set({ error: "" });
-
     try {
       // Trim whitespaces in tags
       const cleanTagNames = tags
@@ -126,15 +111,9 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
         console.log("Bookmark created successfully");
       }
 
-      // Update local ui state to reflect immediately
-      const fullBookmark = { ...newBookmark, tags };
-      set((state) => ({
-        bookmarks: [fullBookmark, ...state.bookmarks],
-      }));
+      
     } catch (error: any) {
-      set({ error: error.message || "Error creating bookmark" });
-    } finally {
-      set({ isLoading: false });
+      throw error
     }
   },
 
@@ -152,7 +131,7 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
 
       if (error) throw error;
     } catch (error: any) {
-      throw new Error(error.message);
+      throw error
     }
   },
   // View Bookmark
@@ -229,7 +208,7 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
 
       if (error) throw error;
     } catch (error: any) {
-      throw new Error(error.message);
+      throw error
     }
   },
 
@@ -250,7 +229,7 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
 
       if (deleteBookmarkError) throw deleteBookmarkError;
     } catch (error: any) {
-      throw new Error(error.message);
+      throw error
     }
   },
 }));
