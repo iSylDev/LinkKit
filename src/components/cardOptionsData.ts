@@ -24,7 +24,7 @@ export function getCardOptions(props: GetCardOptionsProp) {
 
   return [
     { label: "View", icon: ExternalLink, action: actions.onView },
-    { label: "Copy", icon: Copy, action: actions.onCopy },
+    { label: "Copy URL", icon: Copy, action: actions.onCopy },
     { label: "Pin", icon: Pin, action: actions.onPin },
     { label: 'Edit', icon: Pencil, action: actions.onEdit },
     {

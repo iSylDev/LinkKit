@@ -34,20 +34,21 @@ import { SpinnerText } from "./SpinnerText"
 import { Badge } from "./ui/badge"
 import { CircleAlert } from "lucide-react"
 import { useUser } from "@/hooks/useUser"
+import { useState } from "react"
 
 export function NewBookmarkModal() {
+  const [isOpen, setIsOpen] = useState(false);
   const { addBookmark } = useBookmarkStore();
   const { data: user } = useUser()
 
-  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
     resolver: zodResolver(NewBookmarkSchema),
     mode: 'onBlur'
   });
 
   const watchedUrl = watch('websiteUrl');
   const [debouncedUrl] = useDebounce(watchedUrl, 2000);
-  console.log(isSubmitting);
-  
+
 
   const descriptionValue = watch('description');
 
@@ -59,11 +60,10 @@ export function NewBookmarkModal() {
   });
 
 
-  async function createNewBookmark(data: NewBookmarkOutput) {
-    const websiteImage = fetchedWebsiteData?.image || '';
-    const finalDescription = data.description || fetchedWebsiteData?.description || ''
 
-    console.log(data, fetchedWebsiteData, websiteDataFetchError, isFetchingWebsiteData)
+  async function createNewBookmark(data: NewBookmarkOutput) {
+    const websiteImage = fetchedWebsiteData?.icon || fetchedWebsiteData.image || '';
+    const finalDescription = data.description || fetchedWebsiteData?.description || 'https://cdn-icons-png.flaticon.com/512/1243/1243933.png'
 
     if (!user) {
       console.error('No user found, Please log in again')
@@ -78,10 +78,14 @@ export function NewBookmarkModal() {
       finalDescription,
       data.tags
     );
+    reset();
+    setIsOpen(false);
   }
 
+  function handleModalClose()
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen} >
       <DialogTrigger asChild>
         <Button className='flex gap-2 p-2 lg:p-5 '>
           <Plus className='size-5' />
@@ -159,15 +163,15 @@ export function NewBookmarkModal() {
               <p className="text-sm text-destructive">We couldn't fetch any info for the website your provided. Please enter a description manually.</p>
             }
           </FieldGroup>
-        <DialogFooter className="flex flex-row justify-end mt-5">
-          <DialogClose asChild >
-            <Button type="button" variant='outline' className="px-3">Cancel</Button>
-          </DialogClose>
-          <Button disabled={isSubmitting} className="px-3"  >
-            {isSubmitting && <Spinner />}
-            {isSubmitting ? <p className="text-xs">Adding Bookmark</p> : <p>Add Bookmark</p>}
-          </Button>
-        </DialogFooter>
+          <DialogFooter className="flex flex-row justify-end mt-5">
+            <DialogClose asChild >
+              <Button type="button" variant='outline' className="px-3">Cancel</Button>
+            </DialogClose>
+            <Button disabled={isSubmitting} className="px-3"  >
+              {isSubmitting && <Spinner />}
+              {isSubmitting ? <p className="text-xs">Adding Bookmark</p> : <p>Add Bookmark</p>}
+            </Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

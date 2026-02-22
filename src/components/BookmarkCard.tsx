@@ -11,14 +11,14 @@ import { Separator } from "./ui/separator";
 import StatsShowcase from "./StatsShowcase";
 import type { Bookmark } from "@/types";
 
-const BookmarkCard = ({ id, url, image_url, title, description, is_pinned, view_count, last_visited_at, created_at, tags }: Bookmark ) => {
+const BookmarkCard = ({ id, url, image_url, title, description, is_pinned, view_count, last_visited_at, created_at, tags }: Bookmark) => {
   return (
-    <Card 
+    <Card
       className="'min-h-[280px] h-auto w-full max-w-97.5 border-border py-0 pt-5">
       <CardHeader>
         <div className="flex gap-3 items-center">
-          <div>
-            <img src={image_url || ''} className="w-12 h-12 rounded-xl border border-border object-cover " alt="IMG" />
+          <div className="w-12 h-12 border border-border rounded-xl shrink-0 overflow-hidden flex items-center justify-center">
+            <img src={image_url || ''} className="w-8 h-8 object-contain antialiased" alt="IMG" />
           </div>
           <div>
             <h3 className="text-foreground">{title}</h3>
@@ -26,7 +26,7 @@ const BookmarkCard = ({ id, url, image_url, title, description, is_pinned, view_
           </div>
         </div>
         <CardAction>
-          <CardOptionsDropDown id={id} url={url} is_pinned={is_pinned}/>
+          <CardOptionsDropDown id={id} url={url} is_pinned={is_pinned} />
         </CardAction>
       </CardHeader>
       <div className="px-4 flex justify-center -mt-4 -mb-1">
