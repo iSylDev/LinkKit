@@ -1,4 +1,5 @@
 export interface Bookmark {
+  bookmark?: Bookmark | null
   id: string
   user_id?: string;
   url: string;

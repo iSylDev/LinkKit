@@ -12,8 +12,8 @@ import { useUser } from "@/hooks/useUser"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import type { Bookmark } from "@/types"
 
-export function CardOptionsDropDown({ id, url, is_pinned }: { id: string, url: string, is_pinned: boolean }) {
-  const { pin, view, copy, archive } = useBookmarkStore();
+export function CardOptionsDropDown({bookmark, id, url, is_pinned }: { bookmark: Bookmark | null, id: string, url: string, is_pinned: boolean }) {
+  const { pin, view, copy, archive, setEditingBookmark } = useBookmarkStore();
   const { data: user } = useUser();
   const queryClient = useQueryClient()
 
@@ -95,7 +95,11 @@ export function CardOptionsDropDown({ id, url, is_pinned }: { id: string, url: s
       onView: (e) => view(e, url),
       onCopy: () => copy(url),
       onPin: () => pinMutation.mutate(),
-      onEdit: () => console.log('Edit'),
+      onEdit: () => {
+        if (bookmark){
+          setEditingBookmark(bookmark)
+        }
+      },
       onArchive: () => user && archive(id, user.id, false)
     }
   })
@@ -111,7 +115,7 @@ export function CardOptionsDropDown({ id, url, is_pinned }: { id: string, url: s
       <DropdownMenuContent align="end" className="w-43 py-2 px-2" >
         {
           cardOptions.map((option) => (
-            <DropdownMenuItem id={option.label} className="py-2 px-3 text-sm text-foreground font-light gap-3" onClick={option.action}>
+            <DropdownMenuItem id={option.label} className="py-2 px-3 text-sm text-foreground font-light gap-3" onClick={(e) => option.action(e)}>
               <option.icon />
               <p >{option.label}</p>
             </DropdownMenuItem>

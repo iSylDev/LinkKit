@@ -34,14 +34,17 @@ import { SpinnerText } from "./SpinnerText"
 import { Badge } from "./ui/badge"
 import { CircleAlert } from "lucide-react"
 import { useUser } from "@/hooks/useUser"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function NewBookmarkModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { addBookmark } = useBookmarkStore();
-  const { data: user } = useUser()
+  const { addBookmark, editingBookmark } = useBookmarkStore();
+  const { data: user } = useUser();
 
-  const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
+  
+
+
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset, setValue } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
     resolver: zodResolver(NewBookmarkSchema),
     mode: 'onBlur'
   });
@@ -58,6 +61,16 @@ export function NewBookmarkModal() {
     enabled: !!debouncedUrl && debouncedUrl.length > 7 && debouncedUrl.startsWith('http') && !isSubmitting,
     staleTime: 1000 * 60
   });
+
+  useEffect(() => {
+    if (editingBookmark) {
+      setIsOpen(true);
+      setValue( 'title', editingBookmark.title );
+      setValue('description', editingBookmark.description)
+      setValue('tags', editingBookmark.tags?.join(', ') || "");
+      setValue('websiteUrl', editingBookmark.url)
+    }
+  }, [editingBookmark, setValue])
 
 
 
