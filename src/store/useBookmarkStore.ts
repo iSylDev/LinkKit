@@ -5,6 +5,8 @@ import { create } from "zustand";
 
 interface BookmarkState {
   fetchBookmarks: () => Promise<Bookmark[]>;
+  editingBookmark: Bookmark | null;
+  setEditingBookmark: (bookmark: Bookmark | null) => void
   view: (e: React.MouseEvent<HTMLDivElement>, website_url: string) => void;
   pin: (id: string, user_id: string, currentStatus: boolean) => Promise<void>;
   archive: (
@@ -33,7 +35,9 @@ interface BookmarkState {
   ) => Promise<void>;
 }
 
-export const useBookmarkStore = create<BookmarkState>(() => ({
+export const useBookmarkStore = create<BookmarkState>((set) => ({
+  editingBookmark: null,
+  setEditingBookmark: (bookmark: Bookmark | null) => set({ editingBookmark: bookmark }),
 
   // /////////////////////////////////////////
   // FUNCTION TO FETCH BOOKMARKS FROM SUPABASE

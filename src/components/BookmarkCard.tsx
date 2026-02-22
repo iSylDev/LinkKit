@@ -18,7 +18,7 @@ const BookmarkCard = ({ id, url, image_url, title, description, is_pinned, view_
       <CardHeader>
         <div className="flex gap-3 items-center">
           <div className="w-12 h-12 border border-border rounded-xl shrink-0 overflow-hidden flex items-center justify-center">
-            <img src={image_url || ''} className="w-8 h-8 object-contain antialiased" alt="IMG" />
+            <img src={image_url || ''} className="w-8 h-8   object-contain antialiased " alt="IMG" />
           </div>
           <div>
             <h3 className="text-foreground">{title}</h3>

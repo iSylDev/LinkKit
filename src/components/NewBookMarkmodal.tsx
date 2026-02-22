@@ -82,7 +82,6 @@ export function NewBookmarkModal() {
     setIsOpen(false);
   }
 
-  function handleModalClose()
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen} >

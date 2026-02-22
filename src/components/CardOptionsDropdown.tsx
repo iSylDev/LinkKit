@@ -108,7 +108,7 @@ export function CardOptionsDropDown({ id, url, is_pinned }: { id: string, url: s
           <EllipsisVertical className="size-5 text-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-50 py-2 px-2" >
+      <DropdownMenuContent align="end" className="w-43 py-2 px-2" >
         {
           cardOptions.map((option) => (
             <DropdownMenuItem id={option.label} className="py-2 px-3 text-sm text-foreground font-light gap-3" onClick={option.action}>
