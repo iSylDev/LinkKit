@@ -92,6 +92,7 @@ export function CardOptionsDropDown({bookmark, id, url, is_pinned }: { bookmark:
     id,
     url,
     actions: {
+      is_pinned: is_pinned,
       onView: (e) => view(e, url),
       onCopy: () => copy(url),
       onPin: () => pinMutation.mutate(),
