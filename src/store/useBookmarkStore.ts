@@ -24,7 +24,7 @@ interface BookmarkState {
     description: string,
     tags: string[],
   ) => Promise<void>;
-  edit: (
+  editBookmark: (
     id: string,
     updates: {
       title: string;
@@ -151,7 +151,7 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
   // //////////////////////
   // Edit Bookmark Function
   // //////////////////////
-  edit: async (id: string, { title, description, url, tags }) => {
+  editBookmark: async (id: string, { title, description, url, tags }) => {
     try {
       const { error: updateError } = await supabase
         .from("bookmarks")

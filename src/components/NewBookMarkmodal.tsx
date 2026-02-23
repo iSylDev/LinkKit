@@ -40,7 +40,7 @@ import { useEffect, useState } from "react"
 
 export function NewBookmarkModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { addBookmark, editingBookmark } = useBookmarkStore();
+  const { addBookmark, editingBookmark, editBookmark } = useBookmarkStore();
   const { data: user } = useUser();
 
   const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset, setValue } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
@@ -66,28 +66,47 @@ export function NewBookmarkModal() {
     });
 
   useEffect(() => {
-    setIsOpen(true);
-    if ( editingBookmark) {
-      reset();
-      setValue('title', editingBookmark.title),
-      setValue('description', editingBookmark.description);
-      setValue('websiteUrl', editingBookmark.url),
-      setValue('tags', editingBookmark.tags?.join(', ') || '' )
-
+    if (editingBookmark) {
+      setIsOpen(true);
+      reset({
+        title: editingBookmark.title,
+        description: editingBookmark.description,
+        websiteUrl: editingBookmark.url,
+        tags: editingBookmark.tags?.join(', ') || ''
+      })
     }
-  }, [editingBookmark, reset])
+  }, [editingBookmark, reset]);
+
+  useEffect(() => {
+    if (fetchedWebsiteData && !editingBookmark) {
+      const currentDescription = watch('description');
+
+      if (!currentDescription) {
+        setValue('description', fetchedWebsiteData.description)
+      }
+    }
+  }, [fetchedWebsiteData, editingBookmark, setValue, watch])
 
 
 
   async function createNewBookmark(data: NewBookmarkOutput) {
-    const websiteImage = fetchedWebsiteData?.icon || fetchedWebsiteData?.image || 'https://cdn-icons-png.flaticon.com/512/1243/1243933.png';
-
-
-    const finalDescription = data?.description || fetchedWebsiteData?.description
-
     if (!user) {
       console.error('No user found, Please log in again')
       return
+    }
+
+    const websiteImage = fetchedWebsiteData?.icon || fetchedWebsiteData?.image || editingBookmark?.image_url || 'https://cdn-icons-png.flaticon.com/512/1243/1243933.png';
+
+
+    const finalDescription = data.description || fetchedWebsiteData?.description || ''
+
+    if (editingBookmark) {
+      await editBookmark(editingBookmark.id, {
+        title: data.title,
+        description: finalDescription,
+        url: data.websiteUrl,
+        tags: data.tags
+      })
     }
 
     await addBookmark(
@@ -98,8 +117,9 @@ export function NewBookmarkModal() {
       finalDescription,
       data.tags
     );
-    reset();
+
     setIsOpen(false);
+    reset();
   }
 
 
