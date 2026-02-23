@@ -6,7 +6,7 @@ import { Searchbar } from '@/components/Searchbar';
 import { SidebarProvider } from '../components/ui/sidebar.tsx'
 import { NewBookmarkModal } from '@/components/NewBookMarkmodal.tsx';
 import { useBookmarkStore } from '@/store/useBookmarkStore.ts';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import type { Bookmark } from '@/types/index.ts';
 
 

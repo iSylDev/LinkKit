@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewBookmarkSchema, type NewBookmarkInput, type NewBookmarkOutput } from "@/schema/schema"
-import { useQuery } from "@tanstack/react-query"
+import { useQueryClient, useQuery } from "@tanstack/react-query"
 import { fetchMetaData } from "@/helpers/fetchMetaData"
 import { useDebounce } from 'use-debounce';
 import { SpinnerText } from "./SpinnerText"
@@ -39,6 +39,7 @@ import { useEffect, useState } from "react"
 
 
 export function NewBookmarkModal() {
+  const queryClient  = useQueryClient()
   const [isOpen, setIsOpen] = useState(false);
   const { addBookmark, editingBookmark, editBookmark } = useBookmarkStore();
   const { data: user } = useUser();
@@ -118,6 +119,7 @@ export function NewBookmarkModal() {
       data.tags
     );
 
+    queryClient.invalidateQueries({ queryKey: ['bookmarks'] });
     setIsOpen(false);
     reset();
   }
