@@ -36,47 +36,54 @@ import { CircleAlert } from "lucide-react"
 import { useUser } from "@/hooks/useUser"
 import { useEffect, useState } from "react"
 
+
+
 export function NewBookmarkModal() {
   const [isOpen, setIsOpen] = useState(false);
   const { addBookmark, editingBookmark } = useBookmarkStore();
   const { data: user } = useUser();
-
-  
-
 
   const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset, setValue } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
     resolver: zodResolver(NewBookmarkSchema),
     mode: 'onBlur'
   });
 
-  const watchedUrl = watch('websiteUrl');
-  const [debouncedUrl] = useDebounce(watchedUrl, 2000);
+  // Debounce URL so it doesn't spam fetches
+  const [debouncedUrl] = useDebounce(watch('websiteUrl'), 2000);
 
-
+  // Watch if the user enters a description
   const descriptionValue = watch('description');
 
-  const { data: fetchedWebsiteData, error: websiteDataFetchError, isLoading: isFetchingWebsiteData } = useQuery({
-    queryKey: ['website_data', debouncedUrl],
-    queryFn: () => fetchMetaData(debouncedUrl),
-    enabled: !!debouncedUrl && debouncedUrl.length > 7 && debouncedUrl.startsWith('http') && !isSubmitting,
-    staleTime: 1000 * 60
-  });
+  // When the user enters a url, fetch the website data from that url
+  const {
+    data: fetchedWebsiteData,
+    error: websiteDataFetchError,
+    isLoading: isFetchingWebsiteData } = useQuery({
+      queryKey: ['website_data', debouncedUrl],
+      queryFn: () => fetchMetaData(debouncedUrl),
+      enabled: !!debouncedUrl && debouncedUrl.length > 7 && debouncedUrl.startsWith('https://') && !isSubmitting,
+      staleTime: 1000 * 60
+    });
 
   useEffect(() => {
-    if (editingBookmark) {
-      setIsOpen(true);
-      setValue( 'title', editingBookmark.title );
-      setValue('description', editingBookmark.description)
-      setValue('tags', editingBookmark.tags?.join(', ') || "");
-      setValue('websiteUrl', editingBookmark.url)
+    setIsOpen(true);
+    if ( editingBookmark) {
+      reset();
+      setValue('title', editingBookmark.title),
+      setValue('description', editingBookmark.description);
+      setValue('websiteUrl', editingBookmark.url),
+      setValue('tags', editingBookmark.tags?.join(', ') || '' )
+
     }
-  }, [editingBookmark, setValue])
+  }, [editingBookmark, reset])
 
 
 
   async function createNewBookmark(data: NewBookmarkOutput) {
-    const websiteImage = fetchedWebsiteData?.icon || fetchedWebsiteData.image || '';
-    const finalDescription = data.description || fetchedWebsiteData?.description || 'https://cdn-icons-png.flaticon.com/512/1243/1243933.png'
+    const websiteImage = fetchedWebsiteData?.icon || fetchedWebsiteData?.image || 'https://cdn-icons-png.flaticon.com/512/1243/1243933.png';
+
+
+    const finalDescription = data?.description || fetchedWebsiteData?.description
 
     if (!user) {
       console.error('No user found, Please log in again')
