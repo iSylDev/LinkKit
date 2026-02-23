@@ -39,9 +39,9 @@ import { useEffect, useState } from "react"
 
 
 export function NewBookmarkModal() {
-  const queryClient  = useQueryClient()
+  const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false);
-  const { addBookmark, editingBookmark, editBookmark } = useBookmarkStore();
+  const { addBookmark, editingBookmark, editBookmark, setEditingBookmark } = useBookmarkStore();
   const { data: user } = useUser();
 
   const { register, handleSubmit, watch, formState: { errors, isSubmitting }, reset, setValue } = useForm<NewBookmarkInput, any, NewBookmarkOutput>({
@@ -67,13 +67,22 @@ export function NewBookmarkModal() {
     });
 
   useEffect(() => {
-    if (editingBookmark) {
-      setIsOpen(true);
+    if (isOpen) {
+      if (editingBookmark) {
+        setIsOpen(true);
+        reset({
+          title: editingBookmark.title,
+          description: editingBookmark.description,
+          websiteUrl: editingBookmark.url,
+          tags: editingBookmark.tags?.join(', ') || ''
+        })
+      }
+    } else {
       reset({
-        title: editingBookmark.title,
-        description: editingBookmark.description,
-        websiteUrl: editingBookmark.url,
-        tags: editingBookmark.tags?.join(', ') || ''
+        title: '',
+        description: '',
+        websiteUrl: '',
+        tags: ''
       })
     }
   }, [editingBookmark, reset]);
@@ -120,8 +129,9 @@ export function NewBookmarkModal() {
     );
 
     queryClient.invalidateQueries({ queryKey: ['bookmarks'] });
-    setIsOpen(false);
+    // setEditingBookmark(null)
     reset();
+    setIsOpen(false);
   }
 
 
